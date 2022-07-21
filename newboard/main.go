@@ -8,12 +8,17 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
+// version 1.0
+// mobile porting done
+// version 1.01
+// func cruel add
+
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
 	ScreenHeight int = 640  //600 720 //
 	cardTotal    int = 48
 
-	version string = "version 1.0"
+	version string = "version 1.01"
 )
 
 type Game struct {

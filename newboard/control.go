@@ -128,6 +128,9 @@ func attackControl(mp, mc int) {
 		playerNow.bn = mc
 		bmsg = "추가할 카드를 선택하세요"
 		amsg = fmt.Sprintf("0) cardselecting %v , %v\n", mp, mc)
+		if cruel.bools {
+			cruel = cruelStr{nil, 20, false}
+		}
 
 		//
 		// attacker selcting
@@ -136,6 +139,27 @@ func attackControl(mp, mc int) {
 		if playerNow.turn == 1 && attacker.card.skill != "advance" {
 			attacker = nil
 			bmsg = "첫 턴은 공격할 수 없습니다."
+			return
+		}
+		if cruel.bools {
+			pc := cruel.pc
+			bn := cruel.bn
+			dc := &deckCard[pc.pNum][pc.deckNum]
+			attacker = nil
+
+			if cardBoard[mp][mc].card.card.price >= 2 {
+				cardBoard[mp][mc].card.offCard()
+				pc.putCard(dc, bn)
+
+				playerNow.bn = 20
+				playerNow.pMoney -= dc.card.price
+				bmsg = "공격자 카드를 선택하세요"
+
+				cruel = cruelStr{nil, 20, false}
+			} else {
+				bmsg = "$2 이상의 희생카드를 선택하세요"
+			}
+
 			return
 		}
 		bmsg = "공격대상을 선택하세요"
@@ -207,7 +231,12 @@ func selectControl(mp, mc int) {
 			playerNow.pMoney += dc.card.price
 			playerNow.bn = cardS.bn
 		}
+	}
 
+	if dc.card.skill == "cruelty" && playerNow.pMoney >= dc.card.price {
+		*pc = *dc
+		pc.cruelty(playerNow.bn)
+		return
 	}
 
 	if playerNow.pMoney >= dc.card.price {
@@ -220,6 +249,7 @@ func selectControl(mp, mc int) {
 		bmsg = "공격자 카드를 선택하세요"
 	} else {
 		bmsg = "골드가 부족합니다.\n추가할 카드를 선택하세요."
+		return
 	}
 
 	if cardS.skill != "" {
