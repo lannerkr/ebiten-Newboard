@@ -343,7 +343,7 @@ func (p *Players) buffDoActive() {
 	for _, buffs := range playerBuff {
 		buff := buffs.buff
 		apl, apc := buffs.apl, buffs.apc
-		_, tpc := buffs.tpl, buffs.tpc
+		tpl, tpc := buffs.tpl, buffs.tpc
 
 		if buff != "" {
 			switch buff {
@@ -381,6 +381,11 @@ func (p *Players) buffDoActive() {
 						cardBoard[npn][nbn].card = nil
 						apc.bNum = nexB(nbn)
 					}
+				}
+			case "sonic":
+				if playerNow == tpl && apl != tpl && tpc.cardOn {
+					tpc.remBuff(buff)
+					apc.removePlayerBuff(tpc, buff)
 				}
 
 			}
@@ -439,8 +444,6 @@ func (p *Players) buffDoPassive() {
 			case "sonic":
 				if playerNow == tpl && apl != tpl && tpc.cardOn {
 					tpc.used = true
-					tpc.remBuff(buff)
-					apc.removePlayerBuff(tpc, buff)
 				}
 			case "water":
 				if playerNow == apl && apl == tpl && apc.cardOn {
