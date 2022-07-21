@@ -11,8 +11,8 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 		if buff == "shell" || buff == "diving" {
 			pct.remBuff(buff)
 			return
-		} else if buff == "survive" && (pca.card.hp-pct.card.dp) < 1 && pca.card.skill != "trans" {
-			pca.card.hp += 1 - (pca.card.hp - pct.card.dp)
+		} else if buff == "survive" && (pct.card.hp-pca.card.dp) < 1 && pca.card.skill != "trans" {
+			pct.card.hp += 1 - (pct.card.hp - pca.card.dp)
 		}
 	}
 
