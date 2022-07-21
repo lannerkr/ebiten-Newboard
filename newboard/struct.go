@@ -185,4 +185,5 @@ func (pc *deckCardstr) boardC() *cardBoardStr {
 	pn, bn := pc.pNum, pc.bNum
 	cardB := &cardBoard[pn][bn]
 	return cardB
+
 }

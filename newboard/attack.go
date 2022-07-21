@@ -14,6 +14,7 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 		} else if buff == "survive" && (pct.card.hp-pca.card.dp) < 1 && pca.card.skill != "trans" {
 			pct.card.hp += 1 - (pct.card.hp - pca.card.dp)
 		}
+
 	}
 
 	pca.skillDo(pct)

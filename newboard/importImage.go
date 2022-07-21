@@ -117,4 +117,5 @@ func drawTouchedHome(screen *ebiten.Image) {
 	ophome.GeoM.Translate(float64(buttonPos[0].sx+2), float64(buttonPos[0].sy+2))
 
 	screen.DrawImage(homeButton, ophome)
+
 }

@@ -130,4 +130,5 @@ func drawPlayerStat(screen *ebiten.Image) {
 	}
 
 	text.Draw(screen, amsg, arcadeFontB, int(sepw), p3y+cardh+10, color.Black)
+
 }

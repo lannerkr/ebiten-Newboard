@@ -105,6 +105,7 @@ func gamewin() {
 	if winPoint >= 2 {
 		gameWin = true
 		menu = true
+
 	}
 
 }

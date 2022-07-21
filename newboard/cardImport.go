@@ -170,4 +170,5 @@ func shuffleCard() {
 
 	//deckCard[0][1] = deckCardstr{allCard[26], theCardimg(allCard[26]), 0, 20, 1, false, false, nil}
 	//deckCard[1][1] = deckCardstr{allCard[14], theCardimg(allCard[14]), 1, 20, 1, false, false, nil}
+
 }

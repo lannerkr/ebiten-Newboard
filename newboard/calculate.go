@@ -35,4 +35,5 @@ func nexB(bn int) int {
 		nexbn = bn + 1
 	}
 	return nexbn
+
 }

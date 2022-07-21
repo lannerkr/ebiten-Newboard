@@ -105,4 +105,5 @@ func NewGame() *Game {
 		canvasImage: ebiten.NewImage(ScreenWidth, ScreenHeight),
 	}
 	return g
+
 }
