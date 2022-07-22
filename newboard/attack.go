@@ -8,7 +8,7 @@ import (
 
 func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 	for _, buff := range pct.debuf {
-		if buff == "shell" || buff == "diving" {
+		if buff == "shell" {
 			pct.remBuff(buff)
 			return
 		} else if buff == "survive" && (pct.card.hp-pca.card.dp) < 1 && pca.card.skill != "trans" {
@@ -35,12 +35,15 @@ LNECK:
 		} else {
 			pct.card.hp -= 2 - pca.card.dp
 		}
+	} else if pct.card.skill == "diving" && pct.card.hp > pca.card.dp {
+		goto DIVE
 	}
 
 	pct.card.hp = pct.card.hp - pca.card.dp
 	if pct.card.hp <= 0 {
 		pct.offCard()
 	}
+DIVE:
 	pca.used = true
 
 	// 공격 시 시작되는 스킬 function pca.skillDo(pct) 중, 공격이 끝난 후 적용되는 스킬의 go func() 에게 전달하기 위해 attackChan을 open

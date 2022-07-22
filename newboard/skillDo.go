@@ -209,13 +209,6 @@ func (pca *deckCardstr) skillDo(pct *deckCardstr) {
 				pct.addBuff(pct)
 			}
 		}()
-	case "diving":
-		go func() {
-			<-attackChan
-			if pct.cardOn {
-				pct.addBuff(pct)
-			}
-		}()
 
 	}
 AFTERSKT:
@@ -332,6 +325,8 @@ func (pca *deckCardstr) skillDoPassive() {
 		}
 	case "airproof":
 		pca.addBuff(pca)
+	case "diving":
+		pca.addBuff(pca)
 
 	}
 
@@ -361,7 +356,7 @@ func (p *Players) buffDoActive() {
 					}
 				}
 			case "tentacle":
-				if playerNow == apl && apc.cardOn {
+				if playerNow == apl { // && apc.cardOn {
 					if tpc.cardOn {
 						tpc.card.hp = tpc.card.hp - 1
 						if tpc.card.hp <= 0 {

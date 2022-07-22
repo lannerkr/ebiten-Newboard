@@ -37,7 +37,7 @@ func cardimport() {
 	spacesupply := images["우주보급"]
 
 	shell := images["껍데기"]
-	wit := images["wit"]
+	wit := images["꾀"]
 	rush := images["돌진"]
 	stag := images["사슴벌레"]
 	ship := images["양"]
@@ -125,6 +125,7 @@ func shuffleCard() {
 		for p := 0; p < 3; p++ {
 			for d := 0; d < 10; d++ {
 				cn := a[c]
+				//fmt.Println(cn)
 				deckCard[p][d] = deckCardstr{allCard[cn], theCardimg(allCard[cn]), p, 20, d, false, false, nil}
 				c++
 			}
@@ -132,6 +133,6 @@ func shuffleCard() {
 	}
 
 	//deckCard[0][1] = deckCardstr{allCard[26], theCardimg(allCard[26]), 0, 20, 1, false, false, nil}
-	deckCard[1][1] = deckCardstr{allCard[11], theCardimg(allCard[11]), 1, 20, 1, false, false, nil}
+	//deckCard[1][1] = deckCardstr{allCard[11], theCardimg(allCard[11]), 1, 20, 1, false, false, nil}
 
 }

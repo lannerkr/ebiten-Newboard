@@ -228,6 +228,10 @@ func selectControl(mp, mc int) {
 			playerNow.pMoney += dc.card.price
 			cardS.skill = ""
 		case "company":
+			if dc.card.skill == "company" {
+				bmsg = "같은카드를 선택할 수 없습니다.\n추가할 카드를 선택하세요."
+				return
+			}
 			playerNow.pMoney += dc.card.price
 			playerNow.bn = cardS.bn
 		}
