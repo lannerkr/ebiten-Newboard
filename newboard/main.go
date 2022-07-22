@@ -12,6 +12,8 @@ import (
 // mobile porting done
 // version 1.01
 // func cruel add
+// version 1.02
+// bug fix and assets add
 
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
