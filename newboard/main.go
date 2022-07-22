@@ -16,7 +16,7 @@ import (
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
 	ScreenHeight int = 640  //600 720 //
-	cardTotal    int = 48
+	cardTotal    int = 45
 
 	version string = "version 1.01"
 )

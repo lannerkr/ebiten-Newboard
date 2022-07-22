@@ -140,7 +140,7 @@ START:
 
 	for bi, buffs := range playerBuff {
 		if skill == "" && (buffs.apc == apc || buffs.tpc == apc) {
-			if buffs.buff == "incision" || (buffs.buff == "poison" && buffs.apc == apc) {
+			if buffs.buff == "incision" || ((buffs.buff == "poison" || buffs.buff == "tentacle") && buffs.apc == apc) {
 				continue
 			} else if buffs.apc != buffs.tpc {
 				buffs.tpc.remBuff(buffs.buff)

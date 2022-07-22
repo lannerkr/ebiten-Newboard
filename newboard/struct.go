@@ -99,6 +99,7 @@ var (
 	}
 
 	allCard     [cardTotal]Cardstr
+	NallCard    [cardTotal]Cardstr
 	deckCard    [3][10]deckCardstr
 	playingCard [3][10]deckCardstr
 	cardBoard   [3][4]cardBoardStr
@@ -127,6 +128,7 @@ func playerinit() {
 	}
 
 	player = [3]Players{{20, 5, 0, 20, &player[1], 1}, {20, 5, 1, 20, &player[2], 0}, {20, 5, 2, 20, &player[0], 0}}
+	looseplayer = [3]bool{false, false, false}
 	playerBuff = nil
 	playerNow = &player[0]
 	cardS.sel = false
