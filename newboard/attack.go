@@ -2,6 +2,7 @@ package newboard
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 )
@@ -13,6 +14,18 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 			return
 		} else if buff == "survive" && (pct.card.hp-pca.card.dp) < 1 && pca.card.skill != "trans" {
 			pct.card.hp += 1 - (pct.card.hp - pca.card.dp)
+		} else if buff == "submersion" || (buff == "power" && (pca.card.hp <= 1 || pca.card.dp <= 1)) {
+			return
+		} else if buff == "mistery" {
+			rand.Seed(time.Now().UnixNano())
+			misteryCheck := rand.Float32() < 0.5
+			if misteryCheck {
+				//fmt.Println(misteryCheck)
+				continue
+			} else {
+				//fmt.Println(misteryCheck)
+				return
+			}
 		}
 
 	}
@@ -143,10 +156,14 @@ START:
 
 	for bi, buffs := range playerBuff {
 		if skill == "" && (buffs.apc == apc || buffs.tpc == apc) {
-			if buffs.buff == "incision" || ((buffs.buff == "poison" || buffs.buff == "tentacle") && buffs.apc == apc) {
+			if buffs.buff == "incision" || ((buffs.buff == "poison" || buffs.buff == "tentacle" || buffs.buff == "runover") && buffs.apc == apc) {
 				continue
 			} else if buffs.apc != buffs.tpc {
 				buffs.tpc.remBuff(buffs.buff)
+			}
+			if buffs.buff == "runover" {
+				tpc.pNum = buffs.tpl.pn
+				deckCard[tpc.pNum][tpc.deckNum].cardOn = false
 			}
 			playerBuff[bi] = playerBuff[len(playerBuff)-1]
 			playerBuff = playerBuff[:len(playerBuff)-1]

@@ -43,23 +43,23 @@ func cardimport() {
 	ship := images["양"]
 	incision := images["자르기"]
 
-	// bigmon := images["거대괴물"]
-	// bigbug := images["거대벌래"]
-	// fmachine := images["격투머신"]
-	// bug := images["구더기"]
-	// nessie := images["네시"]
-	// runover := images["메치기"]
-	// submersion := images["물에숨어지내다"]
-	// mistery := images["미스테리"]
-	// defence := images["방어"]
-	// grow := images["성장"]
-	// dark := images["암흑"]
-	// orc := images["오크"]
-	// dragon := images["용"]
-	// turtle := images["육지거북"]
-	// charge := images["차지"]
-	// elephant := images["코끼리"]
-	// wield := images["휘두르기"]
+	//bigmon := images["거대괴물"]
+	bigbug := images["거대벌레"]
+	fmachine := images["격투머신"]
+	bug := images["구더기"]
+	nessie := images["네시"]
+	runover := images["메치기"]
+	submersion := images["물에숨어지내다"]
+	mistery := images["미스테리"]
+	//defence := images["방어"]
+	grow := images["성장"]
+	dark := images["암흑"]
+	orc := images["오크"]
+	dragon := images["용"]
+	//turtle := images["육지거북"]
+	charge := images["차지"]
+	elephant := images["코끼리"]
+	wield := images["휘두르기"]
 
 	allCard[0] = Cardstr{"복 어", 2, blowfish, "____", poison, "독: 상대를 공격하면\n다음 자신의 턴에 상\n대를 죽인다", 2, 1, "poison"}
 	allCard[1] = Cardstr{"모 기", 1, mosquito, "____", vampire, "흡혈: 상대를 죽이면\n체력을 3 더한다", 2, 1, "vampire"}
@@ -78,7 +78,7 @@ func cardimport() {
 	allCard[14] = Cardstr{"돌고래", 3, nilcard, "____", nilcard, "물:피공격시 다음턴\n에 1회복/초음파:공격\n시 상대는 1턴간 얼음", 3, 2, "dolphin"}
 	allCard[15] = Cardstr{"물거미", 3, nilcard, "____", nilcard, "공기방탄: 상대 공격\n력에 상관없이, 2의 피\n해만 받는다", 3, 1, "airproof"}
 	allCard[16] = Cardstr{"까 치", 3, nilcard, "____", nilcard, "동료: 죽으면 그자리\n에 원하는 카드를 즉\n시 놓는다", 3, 2, "company"}
-	allCard[17] = Cardstr{"다람쥐", 2, nilcard, "____", nilcard, "버티기: 판에 내려진\n후, 2턴동안 체력 1로 살\n아남습니다", 2, 1, "survive"}
+	allCard[17] = Cardstr{"다람쥐", 2, nilcard, "____", nilcard, "나무타기: 적을 죽이\n면, 옆의 카드를 한번\n더 공격한다", 2, 1, "climb"}
 	allCard[18] = Cardstr{"골 렘", 5, nilcard, "____", nilcard, "거대: 공격시, 오른쪽\n의 카드도 함께 공격", 9, 1, "huge"}
 	allCard[19] = Cardstr{"생 쥐", 0, nilcard, "____", nilcard, "     ", 3, 1, ""}
 	allCard[20] = Cardstr{"태양석", 3, nilcard, "____", nilcard, "태양신: 매턴 마다 공\n격력이 2 증가한다", 5, 0, "helios"}
@@ -97,7 +97,7 @@ func cardimport() {
 	allCard[33] = Cardstr{"말코손바닥사슴", 4, nilcard, "____", nilcard, "뿔: 정면과 양옆도 공\n격할 수 있다", 4, 3, "horn"}
 	allCard[34] = Cardstr{"흡혈박쥐", 3, nilcard, "____", vampire, "흡혈: 상대를 죽이면\n체력을 3 더한다", 3, 2, "vampire"}
 	allCard[35] = Cardstr{"   양", 3, ship, "____", shell, "껌데기: 한번에 죽지\n않으면, 1번 공격을 무\n효화 한다", 3, 1, "shell"}
-	allCard[36] = Cardstr{"거대괴물", 4, nilcard, "____", nilcard, "   ", 5, 3, ""}
+	allCard[36] = Cardstr{"거대괴물", 4, nilcard, "____", nilcard, "   ", 5, 3, " "}
 	allCard[37] = Cardstr{"타 조", 3, nilcard, "____", nilcard, "신속: 첫 배치턴에 상\n대를 공격 할 수 있다", 2, 3, "advance"}
 	allCard[38] = Cardstr{"토 템", 3, nilcard, "____", nilcard, "리더쉽:옆카드 공격\n력 1업. 긴목: 피공시\n비행특성 무효화", 5, 0, "totem"}
 	allCard[39] = Cardstr{"기 린", 4, nilcard, "____", nilcard, "긴목: 피공시 비행특\n성 무효화", 5, 2, "lneck"}
@@ -106,6 +106,18 @@ func cardimport() {
 	allCard[42] = Cardstr{"좀 비", 3, nilcard, "____", nilcard, "독: 상대를 공격하면\n다음 자신의 턴에 상\n대를 죽인다", 3, 2, "poison"}
 	allCard[43] = Cardstr{"펭 귄", 3, nilcard, "____", nilcard, "다이빙: 한번에 죽지\n않으면, 다이빙하여\n공격을 받지않는다", 3, 2, "diving"}
 	allCard[44] = Cardstr{"고릴라", 4, nilcard, "____", nilcard, "전략: 양쪽상대 모두\n를 공격할 수 있습니다", 4, 4, "strategy"}
+	allCard[45] = Cardstr{"오크", 5, orc, "____", wield, "휘두르기: 상대를\n때리면 바로 오른쪽\n으로 날린다", 3, 5, "wield"}
+
+	allCard[46] = Cardstr{"용", 7, dragon, "____", charge, "준비: 공격을 한후,\n1턴간 준비가 필요하다", 8, 6, "charge"}
+	allCard[47] = Cardstr{"네시", 4, nessie, "____", submersion, "물에숨어지내다: 1턴\n은 공격을 받지만, 다\n음턴은 공격을 받지 않는다", 4, 2, "submersion"}
+	allCard[48] = Cardstr{"  ", 4, dark, "____", mistery, "미스테리: 50%의 확률\n로 공격이 맞지 않는다", 3, 2, "mistery"}
+
+	allCard[49] = Cardstr{"격투머신", 4, fmachine, "____", runover, "메치기: 상대를 공\n격하면 다른 상대의\n칸으로 옮긴다", 4, 2, "runover"}
+	allCard[50] = Cardstr{"구더기", 2, bug, "____", grow, "성장: 3턴이 지나면 카드를 뒤집는다", 1, 1, "grow"}
+	allCard[51] = Cardstr{"달팽이", 3, nilcard, "____", shell, "껌데기: 한번에 죽지\n않으면, 1번 공격을 무\n효화 한다", 4, 1, "shell"}
+	allCard[52] = Cardstr{"코끼리", 4, elephant, "____", nilcard, "힘: 공격력이나 체력\n이 1인 상대의 공격은\n통하지 않는다", 4, 3, "power"}
+
+	bigbugCard = Cardstr{"거대벌레", 2, bigbug, "____", nilcard, "   ", 4, 6, " "}
 
 	NallCard[1] = Cardstr{"거래소", 3, dealershop, "____", dealer, "거래상: 이 카드가 놓여\n질때, 플레이어간 카\n드를 교환할수 있음", 4, 1, "dealer"}
 	NallCard[2] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 3, 3, "copy"}
@@ -125,7 +137,6 @@ func shuffleCard() {
 		for p := 0; p < 3; p++ {
 			for d := 0; d < 10; d++ {
 				cn := a[c]
-				//fmt.Println(cn)
 				deckCard[p][d] = deckCardstr{allCard[cn], theCardimg(allCard[cn]), p, 20, d, false, false, nil}
 				c++
 			}
@@ -133,6 +144,6 @@ func shuffleCard() {
 	}
 
 	//deckCard[0][1] = deckCardstr{allCard[26], theCardimg(allCard[26]), 0, 20, 1, false, false, nil}
-	//deckCard[1][1] = deckCardstr{allCard[11], theCardimg(allCard[11]), 1, 20, 1, false, false, nil}
+	//deckCard[1][1] = deckCardstr{allCard[50], theCardimg(allCard[50]), 1, 20, 1, false, false, nil}
 
 }

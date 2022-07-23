@@ -56,7 +56,7 @@ func fillBack(s *ebiten.Image) error {
 	height := ScreenHeight
 	var opboard [12]*ebiten.DrawImageOptions
 
-	background := images["background"]
+	background := images["n_backgroundN"]
 	boardImage := images["boardN"]
 	baw, bah = background.Size()
 	bow, boh = boardImage.Size()

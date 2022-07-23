@@ -164,6 +164,35 @@ func (pca *deckCardstr) skillDo(pct *deckCardstr) {
 		if npct := cardBoard[pct.pNum][nexB(pct.bNum)].card; pct.bNum != 3 && pca.bNum == pct.bNum && npct != nil {
 			pca.attackCard(npct)
 		}
+	case "wield":
+		if cardBoard[pct.pNum][nexB(pct.bNum)].card == nil {
+			cardBoard[pct.pNum][pct.bNum].card = nil
+			cardBoard[pct.pNum][nexB(pct.bNum)].card = pct
+			pct.bNum = nexB(pct.bNum)
+		}
+	case "charge":
+		pca.addBuff(pca)
+		pca.addPlayerBuff(pca)
+	case "runover":
+		go func() {
+			<-attackChan
+			if pct.cardOn && pca.cardOn {
+				npn := nexP(pct.pNum)
+				if npn == pca.pNum {
+					npn = nexP(npn)
+				}
+
+				if cardBoard[npn][pct.bNum].card == nil {
+					pca.addBuff(pct)
+					pca.addPlayerBuff(pct)
+
+					cardBoard[pct.pNum][pct.bNum].card = nil
+					cardBoard[npn][pct.bNum].card = pct
+					pct.pNum = npn
+
+				}
+			}
+		}()
 
 	}
 
@@ -245,6 +274,9 @@ func (pca *deckCardstr) skillDoCastle(pt *Players) {
 		if npct := cardBoard[pt.pn][nexB(pca.bNum)].card; pca.bNum != 3 && npct != nil {
 			pca.attackCard(npct)
 		}
+	case "charge":
+		pca.addBuff(pca)
+		pca.addPlayerBuff(pca)
 
 	}
 }
@@ -327,6 +359,15 @@ func (pca *deckCardstr) skillDoPassive() {
 		pca.addBuff(pca)
 	case "diving":
 		pca.addBuff(pca)
+	case "submersion":
+		pca.addPlayerBuff(pca)
+	case "mistery":
+		pca.addBuff(pca)
+	case "grow":
+		pca.addBuff(pca)
+		pca.addPlayerBuff(pca)
+	case "power":
+		pca.addBuff(pca)
 
 	}
 
@@ -339,6 +380,7 @@ func (p *Players) buffDoActive() {
 		buff := buffs.buff
 		apl, apc := buffs.apl, buffs.apc
 		tpl, tpc := buffs.tpl, buffs.tpc
+		aturn := buffs.aturn
 
 		if buff != "" {
 			switch buff {
@@ -381,6 +423,14 @@ func (p *Players) buffDoActive() {
 				if playerNow == tpl && apl != tpl && tpc.cardOn {
 					tpc.remBuff(buff)
 					apc.removePlayerBuff(tpc, buff)
+				}
+			case "submersion":
+				if playerNow == apl && aturn+1 == apl.turn {
+					apc.addBuff(apc)
+				} else if playerNow == apl && aturn+2 == apl.turn {
+					apc.remBuff(buff)
+					apc.removePlayerBuff(apc, buff)
+					apc.addPlayerBuff(apc)
 				}
 
 			}
@@ -492,6 +542,22 @@ func (p *Players) buffDoPassive() {
 					nexpc.card.dp++
 					apc.addBuff(nexpc)
 					apc.addPlayerBuff(nexpc)
+				}
+			case "charge":
+				if playerNow == apl && playerNow.turn > aturn+1 {
+					apc.remBuff(buff)
+					apc.removePlayerBuff(apc, buff)
+				} else if playerNow == apl {
+					apc.used = true
+				}
+			case "grow":
+				if playerNow == apl && playerNow.turn >= aturn+3 {
+					bigbugCardN := deckCardstr{bigbugCard, theCardimg(bigbugCard), apc.pNum, 20, apc.deckNum, false, false, nil}
+					nbn := apc.bNum
+					apc.offCard()
+					apc.putCard(&bigbugCardN, nbn)
+					deckCard[apc.pNum][apc.deckNum].cardOn = true
+					//apc.removePlayerBuff(apc, buff)
 				}
 
 			}

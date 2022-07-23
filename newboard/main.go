@@ -14,13 +14,17 @@ import (
 // func cruel add
 // version 1.02
 // bug fix and assets add
+// version 1.03
+// background change
+// cards add // orc ...
+// 다람쥐 특성변경
 
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
 	ScreenHeight int = 960  //600 960 720 //
-	cardTotal    int = 45
+	cardTotal    int = 53
 
-	version string = "version 1.02"
+	version string = "version 1.03"
 )
 
 type Game struct {
@@ -44,6 +48,8 @@ var (
 
 	attacker *deckCardstr = nil
 	target   *deckCardstr = nil
+
+	bigbugCard Cardstr
 )
 
 func init() {
@@ -53,6 +59,8 @@ func init() {
 	cardimport()
 	shuffleCard()
 	playerinit()
+
+	fmt.Println(bigbugCard)
 }
 
 func (g *Game) Update() error {

@@ -15,13 +15,19 @@ func gameMenu(screenN *ebiten.Image) {
 	width := ScreenWidth
 	height := ScreenHeight
 
-	restart := images["restartN"]
+	restart := images["n_start"]
 
-	gameover := images["gameoverN"]
+	gameover := images["n_exit"]
 
 	win := images["win"]
 
-	player2 := images["2player"]
+	player2 := images["n_2playerN"]
+
+	menu := images["n_menu"]
+	baw, bah = menu.Size()
+	opback := &ebiten.DrawImageOptions{}
+	opback.GeoM.Translate(0, 0)
+	opback.GeoM.Scale(float64(width)/float64(baw), float64(height)/float64(bah))
 
 	opre := &ebiten.DrawImageOptions{}
 	opre.GeoM.Translate(float64(width/2-320), float64(height/2-200))
@@ -32,11 +38,12 @@ func gameMenu(screenN *ebiten.Image) {
 	op2p := &ebiten.DrawImageOptions{}
 	op2p.GeoM.Translate(float64(width/2-260), float64(height/2+20))
 
-	selWindow := ebiten.NewImage(width, height)
-	selWindow.Fill(color.Black)
+	// selWindow := ebiten.NewImage(width, height)
+	// selWindow.Fill(color.Black)
+	// sop := &ebiten.DrawImageOptions{}
+	// screenN.DrawImage(selWindow, sop)
 
-	sop := &ebiten.DrawImageOptions{}
-	screenN.DrawImage(selWindow, sop)
+	screenN.DrawImage(menu, opback)
 
 	screenN.DrawImage(restart, opre)
 	screenN.DrawImage(gameover, opgo)
@@ -51,7 +58,7 @@ func gameMenu(screenN *ebiten.Image) {
 	ophome.GeoM.Translate(float64(buttonPos[0].sx), float64(buttonPos[0].sy))
 	screenN.DrawImage(homeButton, ophome)
 
-	text.Draw(screenN, version, arcadeFontB, 100, 100, color.White)
+	text.Draw(screenN, version, arcadeFontB, 100, 100, color.Black)
 
 }
 
