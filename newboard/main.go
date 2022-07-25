@@ -18,13 +18,16 @@ import (
 // background change
 // cards add // orc ...
 // 다람쥐 특성변경
+// version 1.1
+// optimizing
+// used card display
 
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
 	ScreenHeight int = 960  //600 960 720 //
 	cardTotal    int = 53
 
-	version string = "version 1.03"
+	version string = "version 1.1"
 )
 
 type Game struct {

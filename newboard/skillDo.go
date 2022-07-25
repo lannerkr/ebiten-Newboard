@@ -38,9 +38,9 @@ func (pca *deckCardstr) skillDo(pct *deckCardstr) {
 				return
 			}
 		}
-
-		pt.pHP = pt.pHP - pca.card.dp
-		pca.used = true
+		pct.card.hp += pca.card.dp
+		pt.pHP -= pca.card.dp
+		//pca.used = true
 	case "tentacle":
 		if !pct.checkcbuf(ska) {
 			pca.addBuff(pct)
@@ -238,6 +238,14 @@ func (pca *deckCardstr) skillDo(pct *deckCardstr) {
 				pct.addBuff(pct)
 			}
 		}()
+	case "airproof":
+		if pca.card.dp != 2 {
+			if pca.card.dp > 2 {
+				pct.card.hp += pca.card.dp - 2
+			} else {
+				pct.card.hp -= 2 - pca.card.dp
+			}
+		}
 
 	}
 AFTERSKT:

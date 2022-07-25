@@ -94,6 +94,7 @@ func (pc *deckCardstr) playingStat(screen *ebiten.Image) {
 	bCn := 4*pc.pNum + int(pc.bNum)
 	px, py := bC[bCn].bx, bC[bCn].by
 	HPboard := images["HPboard"]
+	usedboard := images["usedboard"]
 	hpBw, hpBh := HPboard.Size()
 	hpop := &ebiten.DrawImageOptions{}
 	hpop.GeoM.Scale(0.9*float64(sx)/float64(hpBw), 0.12*float64(sy)/float64(hpBh))
@@ -106,6 +107,14 @@ func (pc *deckCardstr) playingStat(screen *ebiten.Image) {
 	text.Draw(screen, vDP, arcadeFont, sx/53*36+int(px), int(math.Round(float64(sy)*9.4/10))+int(py), color.Black)
 	dbuf := fmt.Sprintf("%v", pc.debuf)
 	text.Draw(screen, dbuf, arcadeFontS, sx/17*11+int(px), sy/40*13+int(py), color.RGBA{0xff, 0, 0, 0xff})
+
+	if pc.used {
+		upop := &ebiten.DrawImageOptions{}
+		upop.GeoM.Scale(float64(cardw)/160, float64(cardh)/180)
+		upop.GeoM.Translate(bC[bCn].bx, bC[bCn].by)
+
+		screen.DrawImage(usedboard, upop)
+	}
 }
 
 func drawPlayerStat(screen *ebiten.Image) {
