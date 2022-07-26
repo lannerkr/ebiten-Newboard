@@ -88,6 +88,7 @@ func newGame() {
 
 	shuffleCard()
 	playerinit()
+	copybook = []copyBookStr{}
 	winPoint = 0
 
 	gameWin = false

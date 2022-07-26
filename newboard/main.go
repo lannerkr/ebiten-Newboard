@@ -21,13 +21,17 @@ import (
 // version 1.1
 // optimizing
 // used card display
+// version 1.2
+// copy skill implement
+// version 1.3
+// redesign
 
 const (
-	ScreenWidth  int = 1280 //800 1280 1440 //
-	ScreenHeight int = 960  //600 960 720 //
-	cardTotal    int = 53
+	ScreenWidth  int = 800 //800 1280 1440 //
+	ScreenHeight int = 600 //600 960 720 //
+	cardTotal    int = 54
 
-	version string = "version 1.1"
+	version string = "version 1.2"
 )
 
 type Game struct {
@@ -106,7 +110,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 
 	msg += fmt.Sprintf("\n %v", msgbuff)
-	//msg += fmt.Sprintf("\n FPS: %v , TPS: %v", ebiten.CurrentFPS(), ebiten.CurrentTPS())
+	msg += fmt.Sprintf("\n %v", copybook)
 	for _, t := range g.touches {
 		x, y := ebiten.TouchPosition(t)
 		msg += fmt.Sprintf("\n(%d, %d) touch %d", x, y, t)

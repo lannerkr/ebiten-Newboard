@@ -7,7 +7,10 @@ import (
 	"time"
 )
 
+// active buff(when turns come) > (when attack card) passive buff > attack skill > target skill
+
 func (pca *deckCardstr) attackCard(pct *deckCardstr) {
+	fmt.Println("010]")
 
 	// target buff check if attacker skill is NOT trans
 	if pca.card.skill != "trans" {
@@ -33,6 +36,7 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 				if misteryCheck {
 					continue
 				} else {
+					pca.used = true
 					return
 				}
 			case "diving":
@@ -49,7 +53,10 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 		}
 	}
 
-	pca.skillDo(pct)
+	pca.skillDoA(pct)
+	// if pca.card.skill != "trans" || !(pca.card.skill == "flying" && pca.used) {
+	// 	pca.skillDoT(pct)
+	// }
 
 	// if pca.card.skill == "flying" {
 	// 	for _, buff := range pct.debuf {
@@ -75,6 +82,9 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 	// 	goto DIVE
 	// }
 
+	if pca.used {
+		goto JUMP
+	}
 	pct.card.hp = pct.card.hp - pca.card.dp
 	if pct.card.hp <= 0 {
 		pct.offCard()
@@ -82,6 +92,7 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 	// DIVE:
 	pca.used = true
 
+JUMP:
 	// 공격 시 시작되는 스킬 function pca.skillDo(pct) 중, 공격이 끝난 후 적용되는 스킬의 go func() 에게 전달하기 위해 attackChan을 open
 	// close 되지 못한 attackChan이 있을 경우, 먼저 attackChan을 close
 	go func() {
@@ -207,6 +218,17 @@ func (apc *deckCardstr) removePlayerBuff(tpc *deckCardstr, skill string) {
 					}
 				case "incision":
 					continue
+				case "copy":
+					for i, cp := range copybook {
+						if cp.pc == apc {
+							if len(copybook) == 1 {
+								copybook = []copyBookStr{}
+							} else {
+								copybook[i] = copybook[len(copybook)-1]
+								copybook = copybook[:len(copybook)-1]
+							}
+						}
+					}
 
 				}
 
