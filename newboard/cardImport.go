@@ -96,7 +96,7 @@ func cardimport() {
 	allCard[32] = Cardstr{"사슴벌레", 3, stag, "____", incision, "자르기: 죽인 카드를\n잘라 3턴간 다신 판에\n올라오지 못하게한다", 3, 2, "incision"}
 	allCard[33] = Cardstr{"말코손바닥사슴", 4, nilcard, "____", nilcard, "뿔: 정면과 양옆도 공\n격할 수 있다", 4, 3, "horn"}
 	allCard[34] = Cardstr{"흡혈박쥐", 3, nilcard, "____", vampire, "흡혈: 상대를 죽이면\n체력을 3 더한다", 3, 2, "vampire"}
-	allCard[35] = Cardstr{"   양", 3, ship, "____", shell, "껌데기: 한번에 죽지\n않으면, 1번 공격을 무\n효화 한다", 3, 1, "shell"}
+	allCard[35] = Cardstr{"   양", 3, ship, "____", shell, "껍데기: 한번에 죽지\n않으면, 해당 공격을 무\n효화 한다.(1번만 발동)", 3, 1, "shell"}
 	allCard[36] = Cardstr{"거대괴물", 4, nilcard, "____", nilcard, "   ", 5, 3, " "}
 	allCard[37] = Cardstr{"타 조", 3, nilcard, "____", nilcard, "신속: 첫 배치턴에 상\n대를 공격 할 수 있다", 2, 3, "advance"}
 	allCard[38] = Cardstr{"토 템", 3, nilcard, "____", nilcard, "리더쉽:옆카드 공격\n력 1업. 긴목: 피공시\n비행특성 무효화", 5, 0, "totem"}
@@ -112,10 +112,11 @@ func cardimport() {
 	allCard[48] = Cardstr{"  ", 4, dark, "____", mistery, "미스테리: 50%의 확률\n로 공격이 맞지 않는다", 3, 2, "mistery"}
 	allCard[49] = Cardstr{"격투머신", 4, fmachine, "____", runover, "메치기: 상대를 공\n격하면 다른 상대의\n칸으로 옮긴다", 4, 2, "runover"}
 	allCard[50] = Cardstr{"구더기", 2, bug, "____", grow, "성장: 3턴이 지나면 카드를 뒤집는다", 1, 1, "grow"}
-	allCard[51] = Cardstr{"달팽이", 3, nilcard, "____", shell, "껌데기: 한번에 죽지\n않으면, 1번 공격을 무\n효화 한다", 4, 1, "shell"}
+	allCard[51] = Cardstr{"달팽이", 3, nilcard, "____", shell, "껍데기: 한번에 죽지\n않으면, 해당 공격을 무\n효화 한다.(1번만 발동)", 4, 1, "shell"}
 	allCard[52] = Cardstr{"코끼리", 4, elephant, "____", nilcard, "힘: 공격력이나 체력\n이 1인 상대의 공격은\n통하지 않는다", 4, 3, "power"}
 
 	allCard[53] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 3, 3, "copy"}
+	allCard[54] = Cardstr{"앵무새", 3, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 2, 2, "copy"}
 
 	bigbugCard = Cardstr{"거대벌레", 2, bigbug, "____", nilcard, "   ", 4, 6, " "}
 
@@ -143,7 +144,7 @@ func shuffleCard() {
 		}
 	}
 
-	//deckCard[0][1] = deckCardstr{allCard[26], theCardimg(allCard[26]), 0, 20, 1, false, false, nil}
-	deckCard[1][1] = deckCardstr{allCard[53], theCardimg(allCard[53]), 1, 20, 1, false, false, nil}
+	//deckCard[0][1] = deckCardstr{allCard[24], theCardimg(allCard[24]), 0, 20, 1, false, false, nil}
+	//deckCard[1][1] = deckCardstr{allCard[53], theCardimg(allCard[53]), 1, 20, 1, false, false, nil}
 
 }

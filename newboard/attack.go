@@ -10,14 +10,14 @@ import (
 // active buff(when turns come) > (when attack card) passive buff > attack skill > target skill
 
 func (pca *deckCardstr) attackCard(pct *deckCardstr) {
-	fmt.Println("010]")
 
-	// target buff check if attacker skill is NOT trans
+	// (passive buff) target buff check if attacker skill is NOT trans
 	if pca.card.skill != "trans" {
 		for _, buff := range pct.debuf {
 			switch buff {
 			case "shell":
 				pct.remBuff(buff)
+				pca.used = true
 				return
 			case "survive":
 				if (pct.card.hp - pca.card.dp) < 1 {
@@ -28,6 +28,7 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 
 			case "power":
 				if pca.card.hp <= 1 || pca.card.dp <= 1 {
+					pca.used = true
 					return
 				}
 			case "mistery":
@@ -44,43 +45,13 @@ func (pca *deckCardstr) attackCard(pct *deckCardstr) {
 					pca.used = true
 					return
 				}
-				// case "lneck":
-				// 	if pca.card.skill == "flying" {
-				// 		goto LNECK
-				// 	}
 
 			}
 		}
 	}
 
-	pca.skillDoA(pct)
-	// if pca.card.skill != "trans" || !(pca.card.skill == "flying" && pca.used) {
-	// 	pca.skillDoT(pct)
-	// }
-
-	// if pca.card.skill == "flying" {
-	// 	for _, buff := range pct.debuf {
-	// 		if buff == "lneck" {
-	// 			break
-	// 		}
-	// 	}
-	// 	player[pct.pNum].pHP -= pca.card.dp
-	// 	pca.used = true
-	// 	return
-	// }
-
-	// LNECK:
-
-	// if pct.card.skill == "airproof" && pca.card.dp != 2 {
-	// 	if pca.card.dp > 2 {
-	// 		pct.card.hp += pca.card.dp - 2
-	// 	} else {
-	// 		pct.card.hp -= 2 - pca.card.dp
-	// 	}
-	// }
-	// if pct.card.skill == "diving" && pct.card.hp > pca.card.dp {
-	// 	goto DIVE
-	// }
+	// attack skill > target skill
+	pca.skillDoA(pct, pca.card.skill)
 
 	if pca.used {
 		goto JUMP
@@ -120,8 +91,8 @@ func (pca *deckCardstr) attackCastle(pt *Players) {
 	pca.used = true
 }
 
-func (pca *deckCardstr) addBuff(pct *deckCardstr) {
-	buff := pca.card.skill
+func (pca *deckCardstr) addBuff(pct *deckCardstr, buff string) {
+	//buff := pca.card.skill
 	// if buff == "dolphin" && pca != pct {
 	// 	buff = "sonic"
 	// } else if buff == "dolphin" && pca == pct {
@@ -171,10 +142,10 @@ func (dc *deckCardstr) checkcbuf(d string) bool {
 	return strings.Contains(str, d)
 }
 
-func (pca *deckCardstr) addPlayerBuff(pct *deckCardstr) {
+func (pca *deckCardstr) addPlayerBuff(pct *deckCardstr, buff string) {
 	pla := &player[pca.pNum]
 	plt := &player[pct.pNum]
-	buff := pca.card.skill
+	//buff := pca.card.skill
 	if buff == "dolphin" {
 		if pca != pct {
 			buff = "sonic"

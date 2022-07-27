@@ -10,294 +10,18 @@ import (
 // befor turn start -> buffDoActive (after pre player click next)
 // after turn end -> buffDoPassive (after player click next)
 
-// Active skill
-// func (pca *deckCardstr) skillDo(pct *deckCardstr) {
-// 	ska := pca.card.skill
-// 	skt := pct.card.skill
-// 	//pa := &player[pca.pNum]
-// 	pt := &player[pct.pNum]
-// 	sktcp := false
-
-// 	switch ska {
-// 	case "poison":
-// 		if !pct.checkcbuf(ska) {
-// 			pca.addBuff(pct)
-// 			pca.addPlayerBuff(pct)
-// 		}
-// 	case "vampire":
-// 		if pct.card.hp <= pca.card.dp {
-// 			go func() {
-// 				<-attackChan
-// 				if !pct.cardOn {
-// 					pca.card.hp += 3
-// 				}
-// 			}()
-// 		}
-// 	case "flying":
-// 		pca.flyingFunc(pct)
-// 		// for _, buff := range pct.debuf {
-// 		// 	if buff == "lneck" {
-// 		// 		return
-// 		// 	}
-// 		// }
-// 		// pct.card.hp += pca.card.dp
-// 		// pt.pHP -= pca.card.dp
-
-// 	case "tentacle":
-// 		if !pct.checkcbuf(ska) {
-// 			pca.addBuff(pct)
-// 			pca.addPlayerBuff(pct)
-// 		}
-
-// 		go func() {
-// 			var killed bool = false
-// 			ptdc := &deckCard[pct.pNum][pct.deckNum]
-// 			pca.addBuff(ptdc)
-// 			for {
-// 				//wait for turnChannel (when player click next, turnChannel will be opened "control.go")
-// 				<-turnChan
-
-// 				if !killed {
-// 					if pct.cardOn {
-// 						continue
-// 					} else {
-// 						killed = true
-// 					}
-// 				} else if killed {
-// 					if pct.cardOn && ptdc.checkcbuf(ska) {
-// 						ptdc.remBuff(ska)
-// 						pca.addBuff(pct)
-// 						pca.addPlayerBuff(pct)
-// 						return
-// 					}
-// 				}
-// 			}
-// 		}()
-// 	case "threat":
-// 		if !pct.checkcbuf(ska) {
-// 			pct.card.dp--
-// 			pca.addBuff(pct)
-// 		}
-// 	case "fire":
-// 		pt.pHP -= pca.card.dp
-// 	case "strategy":
-// 		pNumn := nexP(pct.pNum)
-// 		if pNumn == pca.pNum {
-// 			pNumn = nexP(pNumn)
-// 		}
-// 		if pNumn != pct.pNum && player[pNumn].pHP > 0 {
-// 			if cardBoard[pNumn][pct.bNum].card != nil {
-// 				pctn := cardBoard[pNumn][pct.bNum].card
-// 				pctn.card.hp = pctn.card.hp - pca.card.dp
-// 				if pctn.card.hp <= 0 {
-// 					pctn.offCard()
-// 				}
-// 			} else {
-// 				pt.pHP -= pca.card.dp
-// 			}
-// 		}
-// 	case "dolphin":
-// 		pca.addBuff(pct)
-// 		pca.addPlayerBuff(pct)
-// 	case "sonic":
-// 		pca.addBuff(pct)
-// 		pca.addPlayerBuff(pct)
-// 	case "selfdestruct":
-// 		go func() {
-// 			<-attackChan
-
-// 			pca.offCard()
-// 		}()
-// 	case "mistaken":
-// 		go func() {
-// 			<-attackChan
-
-// 			if !pct.cardOn {
-// 				pcapn, pcadn := pca.pNum, pca.deckNum
-// 				pctpn, pctdn := pct.pNum, pct.deckNum
-// 				pca.offCard()
-
-// 				pcaDeckC := deckCard[pcapn][pcadn]
-// 				deckCard[pcapn][pcadn] = deckCard[pctpn][pctdn]
-// 				deckCard[pcapn][pcadn].pNum = pcapn
-// 				deckCard[pcapn][pcadn].deckNum = pcadn
-
-// 				deckCard[pctpn][pctdn] = pcaDeckC
-// 				deckCard[pctpn][pctdn].deckNum = pctdn
-// 				deckCard[pctpn][pctdn].pNum = pctpn
-
-// 			}
-// 		}()
-// 	case "climb":
-// 		go func() {
-// 			<-attackChan
-
-// 			if !pct.cardOn {
-// 				if cardBoard[pct.pNum][preB(pct.bNum)].card != nil {
-// 					pca.attackCard(cardBoard[pct.pNum][preB(pct.bNum)].card)
-// 				}
-// 				if cardBoard[pct.pNum][nexB(pct.bNum)].card != nil {
-// 					pca.attackCard(cardBoard[pct.pNum][nexB(pct.bNum)].card)
-// 				}
-// 			}
-// 		}()
-// 	case "rush":
-// 		go func() {
-// 			<-attackChan
-// 			if pct.cardOn && pca.cardOn {
-// 				pca.card.hp--
-// 				if pca.card.hp <= 0 {
-// 					pca.offCard()
-// 				}
-// 			}
-// 		}()
-// 	case "incision":
-// 		go func() {
-// 			<-attackChan
-// 			if !pct.cardOn {
-// 				pdc := &deckCard[pct.pNum][pct.deckNum]
-// 				pdc.debuf = append(pdc.debuf, ska)
-// 				pca.addPlayerBuff(pct)
-// 			}
-// 		}()
-// 	case "trans":
-// 		goto AFTERSKT
-// 	case "huge":
-// 		if npct := cardBoard[pct.pNum][nexB(pct.bNum)].card; pct.bNum != 3 && pca.bNum == pct.bNum && npct != nil {
-// 			pca.attackCard(npct)
-// 		}
-// 	case "wield":
-// 		if cardBoard[pct.pNum][nexB(pct.bNum)].card == nil {
-// 			cardBoard[pct.pNum][pct.bNum].card = nil
-// 			cardBoard[pct.pNum][nexB(pct.bNum)].card = pct
-// 			pct.bNum = nexB(pct.bNum)
-// 		}
-// 	case "charge":
-// 		pca.addBuff(pca)
-// 		pca.addPlayerBuff(pca)
-// 	case "runover":
-// 		go func() {
-// 			<-attackChan
-// 			if pct.cardOn && pca.cardOn {
-// 				npn := nexP(pct.pNum)
-// 				if npn == pca.pNum {
-// 					npn = nexP(npn)
-// 				}
-
-// 				if cardBoard[npn][pct.bNum].card == nil {
-// 					pca.addBuff(pct)
-// 					pca.addPlayerBuff(pct)
-
-// 					cardBoard[pct.pNum][pct.bNum].card = nil
-// 					cardBoard[npn][pct.bNum].card = pct
-// 					pct.pNum = npn
-
-// 				}
-// 			}
-// 		}()
-
-// 	}
-
-// SKTCOPY:
-// 	switch skt {
-// 	case "revenge":
-// 		fmt.Println("021]")
-// 		pca.card.hp--
-// 		if pca.card.hp <= 0 {
-// 			pca.offCard()
-// 		}
-// 	case "wit":
-// 		fmt.Println("022]")
-// 		go func(pctCard deckCardstr, plb []buffStr) {
-// 			<-attackChan
-
-// 			if !pct.cardOn && cardBoard[pctCard.pNum][preB(pctCard.bNum)].card == nil {
-// 				pct.putCard(&pctCard, preB(pctCard.bNum))
-// 				deckCard[pct.pNum][pct.deckNum].bNum = preB(pctCard.bNum)
-// 				deckCard[pct.pNum][pct.deckNum].cardOn = true
-
-// 				playerBuff = plb
-// 			}
-// 		}(*pct, playerBuff)
-// 	case "dolphin":
-// 		fmt.Println("023]")
-// 		pct.addPlayerBuff(pct)
-// 	case "water":
-// 		fmt.Println("024]")
-// 		pct.addPlayerBuff(pct)
-// 	case "company":
-// 		fmt.Println("025]")
-// 		go func() {
-// 			<-attackChan
-// 			if !pct.cardOn {
-// 				cardS.pn = playerNow.pn
-// 				playerNow = &player[pct.pNum]
-// 				cardS.bn = pct.bNum
-// 				cardS.sel = true
-// 				cardS.skill = "company"
-
-// 				bmsg = "추가할 카드를 선택하세요"
-// 			}
-// 		}()
-// 	case "shell":
-// 		fmt.Println("026]")
-// 		go func() {
-// 			<-attackChan
-// 			if pct.cardOn {
-// 				pct.addBuff(pct)
-// 			}
-// 		}()
-// 	case "airproof":
-// 		fmt.Println("027]")
-// 		if pca.card.dp != 2 {
-// 			if pca.card.dp > 2 {
-// 				pct.card.hp += pca.card.dp - 2
-// 			} else {
-// 				pct.card.hp -= 2 - pca.card.dp
-// 			}
-// 		}
-// 	case "copy":
-// 		fmt.Println("000]")
-// 		if ppc := cardBoard[preP(pct.pNum)][pct.bNum].card; ppc != nil && !sktcp {
-
-// 			skt = ppc.card.skill
-// 			pct.card.skill = skt
-// 			fmt.Println("001]", pct.card.skill)
-// 			sktcp = true
-// 			goto SKTCOPY
-// 		} else if npc := cardBoard[nexP(pct.pNum)][pct.bNum].card; npc != nil {
-// 			fmt.Println("002]")
-// 			skt = npc.card.skill
-// 			pct.card.skill = skt
-// 			sktcp = false
-// 			goto SKTCOPY
-// 		} else {
-// 			fmt.Println("003]")
-// 			pct.card.skill = "copy"
-// 			sktcp = false
-// 		}
-// 		//pca.copySkillDoCopy(pct)
-
-// 	}
-// 	if sktcp {
-// 		fmt.Println("004]")
-// 		skt = "copy"
-// 		goto SKTCOPY
-// 	}
-// AFTERSKT:
-// }
-func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
-	ska := pca.card.skill
+// Attack skill
+func (pca *deckCardstr) skillDoA(pct *deckCardstr, ska string) {
+	//ska := pca.card.skill
 	//skt := pct.card.skill
 	//pa := &player[pca.pNum]
 	pt := &player[pct.pNum]
-	//sktcp := false
 
 	switch ska {
 	case "poison":
 		if !pct.checkcbuf(ska) {
-			pca.addBuff(pct)
-			pca.addPlayerBuff(pct)
+			pca.addBuff(pct, ska)
+			pca.addPlayerBuff(pct, ska)
 		}
 	case "vampire":
 		if pct.card.hp <= pca.card.dp {
@@ -313,24 +37,16 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 		if pca.used {
 			return
 		}
-		// for _, buff := range pct.debuf {
-		// 	if buff == "lneck" {
-		// 		return
-		// 	}
-		// }
-		// pct.card.hp += pca.card.dp
-		// pt.pHP -= pca.card.dp
-
 	case "tentacle":
 		if !pct.checkcbuf(ska) {
-			pca.addBuff(pct)
-			pca.addPlayerBuff(pct)
+			pca.addBuff(pct, ska)
+			pca.addPlayerBuff(pct, ska)
 		}
 
 		go func() {
 			var killed bool = false
 			ptdc := &deckCard[pct.pNum][pct.deckNum]
-			pca.addBuff(ptdc)
+			pca.addBuff(ptdc, ska)
 			for {
 				//wait for turnChannel (when player click next, turnChannel will be opened "control.go")
 				<-turnChan
@@ -344,8 +60,8 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 				} else if killed {
 					if pct.cardOn && ptdc.checkcbuf(ska) {
 						ptdc.remBuff(ska)
-						pca.addBuff(pct)
-						pca.addPlayerBuff(pct)
+						pca.addBuff(pct, ska)
+						pca.addPlayerBuff(pct, ska)
 						return
 					}
 				}
@@ -354,7 +70,7 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 	case "threat":
 		if !pct.checkcbuf(ska) {
 			pct.card.dp--
-			pca.addBuff(pct)
+			pca.addBuff(pct, ska)
 		}
 	case "fire":
 		pt.pHP -= pca.card.dp
@@ -375,11 +91,11 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 			}
 		}
 	case "dolphin":
-		pca.addBuff(pct)
-		pca.addPlayerBuff(pct)
+		pca.addBuff(pct, "sonic")
+		pca.addPlayerBuff(pct, ska)
 	case "sonic":
-		pca.addBuff(pct)
-		pca.addPlayerBuff(pct)
+		pca.addBuff(pct, ska)
+		pca.addPlayerBuff(pct, ska)
 	case "selfdestruct":
 		go func() {
 			<-attackChan
@@ -435,7 +151,7 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 			if !pct.cardOn {
 				pdc := &deckCard[pct.pNum][pct.deckNum]
 				pdc.debuf = append(pdc.debuf, ska)
-				pca.addPlayerBuff(pct)
+				pca.addPlayerBuff(pct, ska)
 			}
 		}()
 	case "trans":
@@ -451,8 +167,8 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 			pct.bNum = nexB(pct.bNum)
 		}
 	case "charge":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 	case "runover":
 		go func() {
 			<-attackChan
@@ -463,8 +179,8 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 				}
 
 				if cardBoard[npn][pct.bNum].card == nil {
-					pca.addBuff(pct)
-					pca.addPlayerBuff(pct)
+					pca.addBuff(pct, ska)
+					pca.addPlayerBuff(pct, ska)
 
 					cardBoard[pct.pNum][pct.bNum].card = nil
 					cardBoard[npn][pct.bNum].card = pct
@@ -473,27 +189,43 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr) {
 				}
 			}
 		}()
+	case "copy":
+		fmt.Println("000]")
+		if ppc := cardBoard[preP(pca.pNum)][pca.bNum].card; ppc != nil {
+
+			pska := ppc.card.skill
+			//pct.card.skill = pskt
+			fmt.Println("001]", pca.card.skill)
+			pca.skillDoA(pct, pska)
+
+		}
+		if npc := cardBoard[nexP(pca.pNum)][pca.bNum].card; npc != nil {
+			nska := npc.card.skill
+			//pct.card.skill = nskt
+			fmt.Println("002]", pca.card.skill)
+			pca.skillDoA(pct, nska)
+
+		}
 
 	}
 
-	pca.skillDoT(pct)
+	// target skill
+	if pca.card.skill != "copy" || pct.card.skill != "copy" {
+		pca.skillDoT(pct, pct.card.skill)
+	}
 }
-func (pca *deckCardstr) skillDoT(pct *deckCardstr) {
-	skt := pct.card.skill
+func (pca *deckCardstr) skillDoT(pct *deckCardstr, skt string) {
+	//skt := pct.card.skill
 	//pa := &player[pca.pNum]
 	//pt := &player[pct.pNum]
-	sktcp := false
 
-SKTCOPY:
 	switch skt {
 	case "revenge":
-		fmt.Println("021]")
 		pca.card.hp--
 		if pca.card.hp <= 0 {
 			pca.offCard()
 		}
 	case "wit":
-		fmt.Println("022]")
 		go func(pctCard deckCardstr, plb []buffStr) {
 			<-attackChan
 
@@ -506,13 +238,10 @@ SKTCOPY:
 			}
 		}(*pct, playerBuff)
 	case "dolphin":
-		fmt.Println("023]")
-		pct.addPlayerBuff(pct)
+		pct.addPlayerBuff(pct, skt)
 	case "water":
-		fmt.Println("024]")
-		pct.addPlayerBuff(pct)
+		pct.addPlayerBuff(pct, skt)
 	case "company":
-		fmt.Println("025]")
 		go func() {
 			<-attackChan
 			if !pct.cardOn {
@@ -526,15 +255,13 @@ SKTCOPY:
 			}
 		}()
 	case "shell":
-		fmt.Println("026]")
 		go func() {
 			<-attackChan
 			if pct.cardOn {
-				pct.addBuff(pct)
+				pct.addBuff(pct, skt)
 			}
 		}()
 	case "airproof":
-		fmt.Println("027]")
 		if pca.card.dp != 2 {
 			if pca.card.dp > 2 {
 				pct.card.hp += pca.card.dp - 2
@@ -544,33 +271,23 @@ SKTCOPY:
 		}
 	case "copy":
 		fmt.Println("000]")
-		if ppc := cardBoard[preP(pct.pNum)][pct.bNum].card; ppc != nil && !sktcp {
+		if ppc := cardBoard[preP(pct.pNum)][pct.bNum].card; ppc != nil {
 
-			skt = ppc.card.skill
-			pct.card.skill = skt
+			pskt := ppc.card.skill
+			//pct.card.skill = pskt
 			fmt.Println("001]", pct.card.skill)
-			sktcp = true
-			goto SKTCOPY
-		} else if npc := cardBoard[nexP(pct.pNum)][pct.bNum].card; npc != nil {
-			fmt.Println("002]")
-			skt = npc.card.skill
-			pct.card.skill = skt
-			sktcp = false
-			goto SKTCOPY
-		} else {
-			fmt.Println("003]")
-			pct.card.skill = "copy"
-			sktcp = false
+			pca.skillDoT(pct, pskt)
+
 		}
-		//pca.copySkillDoCopy(pct)
+		if npc := cardBoard[nexP(pct.pNum)][pct.bNum].card; npc != nil {
+			nskt := npc.card.skill
+			//pct.card.skill = nskt
+			fmt.Println("002]", pct.card.skill)
+			pca.skillDoT(pct, nskt)
+
+		}
 
 	}
-	if sktcp {
-		fmt.Println("004]")
-		skt = "copy"
-		goto SKTCOPY
-	}
-	// AFTERSKT:
 }
 
 // Active skill when attack castle
@@ -605,8 +322,8 @@ func (pca *deckCardstr) skillDoCastle(pt *Players) {
 			pca.attackCard(npct)
 		}
 	case "charge":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 
 	}
 }
@@ -621,47 +338,47 @@ func (pca *deckCardstr) skillDoPassive() {
 	switch ska {
 	case "run":
 		if !pca.checkcbuf(ska) {
-			pca.addBuff(pca)
-			pca.addPlayerBuff(pca)
+			pca.addBuff(pca, ska)
+			pca.addPlayerBuff(pca, ska)
 		}
 	case "eggC":
-		pca.addPlayerBuff(pca)
+		pca.addPlayerBuff(pca, ska)
 	case "cute":
 		bn := pca.bNum
 		prepc := cardBoard[preP(pca.pNum)][bn].card
 		nexpc := cardBoard[nexP(pca.pNum)][bn].card
 		if prepc != nil && prepc.card.dp != 0 && !prepc.checkcbuf(ska) {
 			prepc.card.dp--
-			pca.addBuff(prepc)
-			pca.addPlayerBuff(prepc)
+			pca.addBuff(prepc, ska)
+			pca.addPlayerBuff(prepc, ska)
 		}
 		if nexpc != nil && nexpc.card.dp != 0 && !nexpc.checkcbuf(ska) {
 			nexpc.card.dp--
-			pca.addBuff(nexpc)
-			pca.addPlayerBuff(nexpc)
+			pca.addBuff(nexpc, ska)
+			pca.addPlayerBuff(nexpc, ska)
 		}
-		pca.addPlayerBuff(pca)
+		pca.addPlayerBuff(pca, ska)
 	case "dolphin":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "water":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "company":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "survive":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 	case "helios":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 	case "spacesupply":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 	case "sCoin":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 	case "totem":
 		// add passive buff "lneck" to itself
-		pca.addBuff(pca)
+		pca.addBuff(pca, "lneck")
 
 		// add buff "leader" to side card
 		bn := pca.bNum
@@ -669,35 +386,35 @@ func (pca *deckCardstr) skillDoPassive() {
 		nexpc := cardBoard[pca.pNum][nexB(bn)].card
 		if prepc != nil && !prepc.checkcbuf(ska) {
 			prepc.card.dp++
-			pca.addBuff(prepc)
-			pca.addPlayerBuff(prepc)
+			pca.addBuff(prepc, "leader")
+			pca.addPlayerBuff(prepc, ska)
 		}
 		if nexpc != nil && !nexpc.checkcbuf(ska) {
 			nexpc.card.dp++
-			pca.addBuff(nexpc)
-			pca.addPlayerBuff(nexpc)
+			pca.addBuff(nexpc, "leader")
+			pca.addPlayerBuff(nexpc, ska)
 		}
-		pca.addPlayerBuff(pca)
+		pca.addPlayerBuff(pca, ska)
 	case "lneck":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "jump":
 		if !pca.checkcbuf(ska) {
-			pca.addBuff(pca)
-			pca.addPlayerBuff(pca)
+			pca.addBuff(pca, ska)
+			pca.addPlayerBuff(pca, ska)
 		}
 	case "airproof":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "diving":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "submersion":
-		pca.addPlayerBuff(pca)
+		pca.addPlayerBuff(pca, ska)
 	case "mistery":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "grow":
-		pca.addBuff(pca)
-		pca.addPlayerBuff(pca)
+		pca.addBuff(pca, ska)
+		pca.addPlayerBuff(pca, ska)
 	case "power":
-		pca.addBuff(pca)
+		pca.addBuff(pca, ska)
 	case "copy":
 		cp := copyBookStr{
 			pca,
@@ -707,7 +424,7 @@ func (pca *deckCardstr) skillDoPassive() {
 			},
 		}
 		copybook = append(copybook, cp)
-		pca.addPlayerBuff(pca)
+		pca.addPlayerBuff(pca, ska)
 		pca.OnboardSkillCopy()
 
 	}
@@ -767,11 +484,11 @@ func (p *Players) buffDoActive() {
 				}
 			case "submersion":
 				if playerNow == apl && aturn+1 == apl.turn {
-					apc.addBuff(apc)
+					apc.addBuff(apc, buff)
 				} else if playerNow == apl && aturn+2 == apl.turn {
 					apc.remBuff(buff)
 					apc.removePlayerBuff(apc, buff)
-					apc.addPlayerBuff(apc)
+					apc.addPlayerBuff(apc, buff)
 				}
 
 			}
@@ -819,13 +536,13 @@ func (p *Players) buffDoPassive() {
 
 				if prepc != nil && prepc.card.dp != 0 && !prepc.checkcbuf(buff) {
 					prepc.card.dp--
-					apc.addBuff(prepc)
-					apc.addPlayerBuff(prepc)
+					apc.addBuff(prepc, buff)
+					apc.addPlayerBuff(prepc, buff)
 				}
 				if nexpc != nil && nexpc.card.dp != 0 && !nexpc.checkcbuf(buff) {
 					nexpc.card.dp--
-					apc.addBuff(nexpc)
-					apc.addPlayerBuff(nexpc)
+					apc.addBuff(nexpc, buff)
+					apc.addPlayerBuff(nexpc, buff)
 				}
 			case "sonic":
 				if playerNow == tpl && apl != tpl && tpc.cardOn {
@@ -876,13 +593,13 @@ func (p *Players) buffDoPassive() {
 
 				if prepc != nil && !prepc.checkcbuf(buff) {
 					prepc.card.dp++
-					apc.addBuff(prepc)
-					apc.addPlayerBuff(prepc)
+					apc.addBuff(prepc, buff)
+					apc.addPlayerBuff(prepc, buff)
 				}
 				if nexpc != nil && !nexpc.checkcbuf(buff) {
 					nexpc.card.dp++
-					apc.addBuff(nexpc)
-					apc.addPlayerBuff(nexpc)
+					apc.addBuff(nexpc, buff)
+					apc.addPlayerBuff(nexpc, buff)
 				}
 			case "charge":
 				if playerNow == apl && playerNow.turn > aturn+1 {
@@ -907,83 +624,4 @@ func (p *Players) buffDoPassive() {
 			}
 		}
 	}
-}
-
-type copyBookStr struct {
-	pc *deckCardstr
-	tc [2]tcStr
-}
-type tcStr struct {
-	tpc  *deckCardstr
-	buff string
-}
-
-var copybook []copyBookStr
-
-func (pca *deckCardstr) OnboardSkillCopy() {
-	ppc := cardBoard[preP(pca.pNum)][pca.bNum].card
-	npc := cardBoard[nexP(pca.pNum)][pca.bNum].card
-
-	for i, cpb := range copybook {
-		if cpb.pc == pca {
-			pc := ppc
-			for k := 0; k < 2; k++ {
-				if cpb.tc[k].tpc != pc {
-					if cpb.tc[k].buff != "" {
-						pca.remBuff(cpb.tc[k].buff)
-					}
-					if pc == nil {
-						cpb.tc[k].tpc = nil
-					} else {
-						copybook[i].tc[k].tpc = pc
-						pca.card.skill = pc.card.skill
-						bl0 := len(pca.debuf)
-						pca.skillDoPassive()
-						bl1 := len(pca.debuf)
-						if bl0 != bl1 {
-							copybook[i].tc[k].buff = pca.debuf[bl1-1]
-						}
-						pca.card.skill = "copy"
-					}
-				}
-				pc = npc
-			}
-		}
-	}
-
-	// if ppc != nil && !pca.checkcbuf(ppc.card.skill) {
-	// 	pca.card.skill = ppc.card.skill
-	// 	pca.skillDoPassive()
-	// 	pca.card.skill = "copy"
-
-	// }
-
-	// if npc != nil && !pca.checkcbuf(npc.card.skill) {
-	// 	pca.card.skill = npc.card.skill
-	// 	pca.skillDoPassive()
-	// 	pca.card.skill = "copy"
-	// }
-}
-
-// func (pc *deckCardstr) copySkillCheck() {
-
-// 	var pskill, nskill string
-// 	if ppc := cardBoard[preP(pc.pNum)][pc.bNum].card; ppc != nil {
-// 		pskill = ppc.card.skill
-// 	}
-// 	if npc := cardBoard[nexP(pc.pNum)][pc.bNum].card; npc != nil {
-// 		nskill = npc.card.skill
-// 	}
-
-// RECHECK:
-// 	for _, buff := range pc.debuf {
-// 		if buff != pskill && buff != nskill {
-// 			pc.remBuff(buff)
-// 			goto RECHECK
-// 		}
-// 	}
-// }
-
-func (pca *deckCardstr) copySkillDoCopy(pct *deckCardstr) {
-
 }

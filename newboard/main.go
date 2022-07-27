@@ -25,11 +25,12 @@ import (
 // copy skill implement
 // version 1.3
 // redesign
+// cruelbools control modified (attackControl())
 
 const (
 	ScreenWidth  int = 800 //800 1280 1440 //
 	ScreenHeight int = 600 //600 960 720 //
-	cardTotal    int = 54
+	cardTotal    int = 55
 
 	version string = "version 1.2"
 )
