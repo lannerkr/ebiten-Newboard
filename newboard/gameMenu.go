@@ -64,16 +64,22 @@ func gameMenu(screenN *ebiten.Image) {
 
 func menuselecting(mx int) {
 	if mx == 1 {
+		twoplay = false
 		newGame()
 		menu = false
+		pickBools = true
+		//go pickNumber(ji)
 	} else if mx == 2 {
 		os.Exit(0)
 	} else if mx == 3 {
+		twoplay = true
 		newGame()
 		player[2].pHP = 0
 		looseplayer[2] = true
 		winPoint = 1
 		menu = false
+		pickBools = true
+		//go pickNumber(ji)
 	} else if mx == 5 {
 		touchedHome = true
 		go func() {
@@ -86,7 +92,8 @@ func menuselecting(mx int) {
 
 func newGame() {
 
-	shuffleCard()
+	newShuffle()
+	//shuffleCard()
 	playerinit()
 	copybook = []copyBookStr{}
 	winPoint = 0
@@ -94,6 +101,8 @@ func newGame() {
 	gameWin = false
 	menu = false
 
+	jipick = 0
+	pickplayer = 0
 }
 
 func gamewin() {

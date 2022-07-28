@@ -1,6 +1,7 @@
 package newboard
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -146,5 +147,51 @@ func shuffleCard() {
 
 	//deckCard[0][1] = deckCardstr{allCard[24], theCardimg(allCard[24]), 0, 20, 1, false, false, nil}
 	//deckCard[1][1] = deckCardstr{allCard[53], theCardimg(allCard[53]), 1, 20, 1, false, false, nil}
+
+}
+
+type pickCardStr struct {
+	first  deckCardstr
+	second deckCardstr
+}
+
+var pickCard [3][5]pickCardStr
+
+func newShuffle() {
+	if twoplay {
+		fmt.Println(twoplay)
+	}
+	var a [cardTotal - 1]int
+	for i := 0; i < int(cardTotal)-1; i++ {
+		a[i] = i
+	}
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(a), func(i, j int) { a[i], a[j] = a[j], a[i] })
+
+	for c := 0; c < 30; c++ {
+		for p := 0; p < 3; p++ {
+			for d := 0; d < 5; d++ {
+
+				cn := a[c]
+				pickCard[p][d].first = deckCardstr{allCard[cn], theCardimg(allCard[cn]), p, 20, d, false, false, nil}
+				cn = a[c+1]
+				pickCard[p][d].second = deckCardstr{allCard[cn], theCardimg(allCard[cn]), p, 20, d, false, false, nil}
+				c += 2
+
+			}
+		}
+	}
+
+	// test card
+	ppn, pdn, pcn1, pcn2 := 0, 1, 53, 22
+	pickCard[ppn][pdn].first = deckCardstr{allCard[pcn1], theCardimg(allCard[pcn1]), ppn, 20, pdn, false, false, nil}
+	pickCard[ppn][pdn].second = deckCardstr{allCard[pcn2], theCardimg(allCard[pcn2]), ppn, 20, pdn, false, false, nil}
+
+	// for p := 0; p < 3; p++ {
+	// 	for d := 0; d < 5; d++ {
+	// 		fmt.Println(pickCard[p][d].first, " // ", pickCard[p][d].second)
+	// 		fmt.Println("------")
+	// 	}
+	// }
 
 }

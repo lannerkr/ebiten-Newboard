@@ -26,13 +26,15 @@ import (
 // version 1.3
 // redesign
 // cruelbools control modified (attackControl())
+// version 1.4
+// cardPick add
 
 const (
 	ScreenWidth  int = 800 //800 1280 1440 //
 	ScreenHeight int = 600 //600 960 720 //
 	cardTotal    int = 55
 
-	version string = "version 1.2"
+	version string = "version 1.4"
 )
 
 type Game struct {
@@ -53,11 +55,19 @@ var (
 	gameWin     bool    = false
 	winPoint    int     = 0
 	looseplayer [3]bool = [3]bool{false, false, false}
+	twoplay     bool    = false
 
 	attacker *deckCardstr = nil
 	target   *deckCardstr = nil
 
 	bigbugCard Cardstr
+
+	pickBools  bool = true
+	jipick     int  = 0
+	ji         *int = &jipick
+	pickplayer int  = 0
+	pickChan        = make(chan string)
+	//pickNChan       = make(chan string)
 )
 
 func init() {
@@ -65,10 +75,11 @@ func init() {
 	fontimport()
 	fillBack(backImage)
 	cardimport()
-	shuffleCard()
+	newShuffle()
+	//shuffleCard()
 	playerinit()
 
-	fmt.Println(bigbugCard)
+	//fmt.Println(bigbugCard)
 }
 
 func (g *Game) Update() error {
@@ -86,12 +97,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	screen.DrawImage(backImage, backop)
 	drawPlayerStat(screen)
 
-	if !cardS.sel && !menu {
+	if !cardS.sel && !menu && !pickBools {
 		drawCard(screen)
-	} else if cardS.sel && !menu {
+	} else if cardS.sel && !menu && !pickBools {
 		playerNow.drawCardSelect(screen)
 	} else if menu {
 		gameMenu(screen)
+	} else if pickBools {
+		pickingCard(screen, ji)
 	}
 
 	if touchedHome {

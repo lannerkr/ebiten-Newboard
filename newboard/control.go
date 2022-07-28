@@ -55,10 +55,12 @@ func control() {
 			} else if mpos.mc == 6 {
 				mcc6()
 			}
-		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel /*&& !cruelbool && !dealerFb*/ {
+		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools /*&& !cruelbool && !dealerFb*/ {
 			attackControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn {
+		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools {
 			selectControl(mpos.mp, mpos.mc)
+		} else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
+			pickControl(mpos.mp, mpos.mc)
 		}
 
 	}
@@ -66,6 +68,7 @@ func control() {
 }
 
 func mcc5() {
+	//fmt.Println("ji: ", *ji)
 	touchedHome = true
 	go func() {
 		time.Sleep(200 * time.Millisecond)
@@ -76,12 +79,15 @@ func mcc5() {
 		menu = false
 	} else if cardS.sel /*|| cruelbool || dealerFb*/ {
 		cardS.sel = false
+	} else if pickBools {
+		pickBools = false
 	} else {
 		menu = true
 	}
 }
 
 func mcc6() {
+	//fmt.Println(playerNow.pn)
 	touchedNext = true
 	go func() {
 		time.Sleep(200 * time.Millisecond)
@@ -99,7 +105,11 @@ func mcc6() {
 		turnChan <- ""
 	}()
 
-	if !cardS.sel {
+	if pickBools {
+		go pickNumber(ji)
+	}
+
+	if !cardS.sel && !pickBools {
 		playerNow.buffDoActive()
 
 		playerNow.pMoney = playerNow.pMoney + 3
@@ -108,12 +118,14 @@ func mcc6() {
 			playingCard[playerNow.pn][i].used = false
 		}
 
+		//fmt.Println(playerNow, playerNow.pn, playerNow.pMoney)
 		playerNow = playerNow.next
 		playerNow.turn++
 		if playerNow.pHP <= 0 {
 			playerNow = playerNow.next
 			playerNow.turn++
 		}
+		//fmt.Println(playerNow, playerNow.pn, playerNow.pMoney)
 
 		playerNow.buffDoPassive()
 	}
@@ -236,6 +248,7 @@ func selectControl(mp, mc int) {
 	cardNum := 4*mp + mc
 	pc := &playingCard[playerNow.pn][cardNum]
 	dc := &deckCard[playerNow.pn][cardNum]
+	fmt.Println(cardNum, pc.pNum, pc.deckNum, dc.pNum, dc.deckNum)
 
 	for _, debuffs := range dc.debuf {
 		if debuffs == "incision" {
@@ -286,6 +299,40 @@ func selectControl(mp, mc int) {
 			cardS.skill = ""
 		}
 
+	}
+
+}
+
+func pickControl(mp, mc int) {
+
+	if mp == 0 && mc == 0 {
+		pickplayer = 0
+		jipick = 0
+	} else if mp == 1 && mc == 0 {
+		pickplayer = 1
+		jipick = 0
+	} else if mp == 2 && mc == 0 {
+		if twoplay {
+			return
+		}
+		pickplayer = 2
+		jipick = 0
+	} else if mc == 2 {
+		go pickedC(mc)
+		pickChan <- "" // wait until pickedC() ends and closes pickChan channel
+		pickNumber(ji)
+		//time.Sleep(100 * time.Millisecond)
+
+		// pickNChan <- ""
+		// time.Sleep(100 * time.Millisecond)
+
+	} else if mc == 3 {
+		go pickedC(mc)
+		pickChan <- ""
+
+		//pickNChan <- ""
+		//time.Sleep(100 * time.Millisecond)
+		pickNumber(ji)
 	}
 
 }

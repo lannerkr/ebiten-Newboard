@@ -1,6 +1,8 @@
 package newboard
 
 import (
+	"fmt"
+
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -140,6 +142,8 @@ func playerinit() {
 			playingCard[i][j].cardOn = false
 		}
 	}
+	fmt.Println(player[0].pn, player[1].pn, player[2].pn)
+	fmt.Println(playerNow.pn)
 }
 
 func init() {
