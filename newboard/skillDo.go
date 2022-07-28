@@ -426,6 +426,9 @@ func (pca *deckCardstr) skillDoPassive() {
 		copybook = append(copybook, cp)
 		pca.addPlayerBuff(pca, ska)
 		pca.OnboardSkillCopy()
+	case "dealer":
+		dealBool = true
+		dealerS = false
 
 	}
 

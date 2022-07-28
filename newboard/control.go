@@ -26,12 +26,14 @@ func (g *Game) touchControl() {
 			} else if mpos.mc == 6 && !menu {
 				mcc6()
 			}
-		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools /*&& !cruelbool && !dealerFb*/ {
+		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools && !dealBool /*&& !cruelbool && !dealerFb*/ {
 			attackControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && !deckCard[playerNow.pn][dn].cardOn && !pickBools {
+		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
 			selectControl(mpos.mp, mpos.mc)
 		} else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
 			pickControl(mpos.mp, mpos.mc)
+		} else if mpos.mp != 8 && mpos.mc != 8 && dealBool {
+			dealControl(mpos.mp, mpos.mc)
 		}
 
 	}
@@ -57,12 +59,14 @@ func control() {
 			} else if mpos.mc == 6 {
 				mcc6()
 			}
-		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools /*&& !cruelbool && !dealerFb*/ {
+		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools && !dealBool /*&& !cruelbool && !dealerFb*/ {
 			attackControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools {
+		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
 			selectControl(mpos.mp, mpos.mc)
 		} else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
 			pickControl(mpos.mp, mpos.mc)
+		} else if mpos.mp != 8 && mpos.mc != 8 && dealBool {
+			dealControl(mpos.mp, mpos.mc)
 		}
 
 	}
@@ -83,6 +87,10 @@ func mcc5() {
 		cardS.sel = false
 	} else if pickBools {
 		pickBools = false
+	} else if dealBool && dealerS {
+		dealerS = false
+	} else if dealBool {
+		dealBool = false
 	} else {
 		menu = true
 	}
@@ -111,7 +119,13 @@ func mcc6() {
 		go pickNumber(ji)
 	}
 
-	if !cardS.sel && !pickBools {
+	if dealBool && !dealerS {
+		dealerCardChange()
+		dealBool = false
+		return
+	}
+
+	if !cardS.sel && !pickBools && !dealBool && !dealerS {
 		playerNow.buffDoActive()
 
 		playerNow.pMoney = playerNow.pMoney + 3
@@ -177,27 +191,7 @@ func attackControl(mp, mc int) {
 			bmsg = "첫 턴은 공격할 수 없습니다."
 			return
 		}
-		// if cruel.bools {
-		// 	pc := cruel.pc
-		// 	bn := cruel.bn
-		// 	dc := &deckCard[pc.pNum][pc.deckNum]
-		// 	attacker = nil
 
-		// 	if cardBoard[mp][mc].card.card.price >= 2 {
-		// 		cardBoard[mp][mc].card.offCard()
-		// 		pc.putCard(dc, bn)
-
-		// 		playerNow.bn = 20
-		// 		playerNow.pMoney -= dc.card.price
-		// 		bmsg = "공격자 카드를 선택하세요"
-
-		// 		cruel = cruelStr{nil, 20, false}
-		// 	} else {
-		// 		bmsg = "$2 이상의 희생카드를 선택하세요"
-		// 	}
-
-		// 	return
-		// }
 		bmsg = "공격대상을 선택하세요"
 		amsg = fmt.Sprintf("attack() is called. mp : %v , mc : %v\nattacker:%v , target:%v\n", mp, mc, attacker.card.name, target)
 
@@ -323,18 +317,45 @@ func pickControl(mp, mc int) {
 		go pickedC(mc)
 		pickChan <- "" // wait until pickedC() ends and closes pickChan channel
 		pickNumber(ji)
-		//time.Sleep(100 * time.Millisecond)
-
-		// pickNChan <- ""
-		// time.Sleep(100 * time.Millisecond)
 
 	} else if mc == 3 {
 		go pickedC(mc)
 		pickChan <- ""
-
-		//pickNChan <- ""
-		//time.Sleep(100 * time.Millisecond)
 		pickNumber(ji)
 	}
 
+}
+
+func dealControl(mp, mc int) {
+	//var offer, reciever int
+	if !dealerS {
+		if mc == 0 || mc == 2 {
+			dOffer = mp
+			//cardS.sel = true
+			dealP = dOffer
+			bmsg = "거래할 카드를 선택하세요"
+			dealerS = true
+			//fmt.Println(dealP)
+
+		} else if mc == 1 || mc == 3 {
+			dReciever = mp
+			//cardS.sel = true
+			dealP = dReciever
+			bmsg = "거래할 카드를 선택하세요"
+			dealerS = true
+			//fmt.Println(dealP)
+		}
+	} else {
+		fmt.Println(dealP, dOffer, dReciever)
+		if dealP == dOffer {
+			deckNum := 4*mp + mc
+			dOfferD = deckNum
+			dealerS = false
+		} else if dealP == dReciever {
+			deckNum := 4*mp + mc
+			dRecieverD = deckNum
+			dealerS = false
+		}
+
+	}
 }

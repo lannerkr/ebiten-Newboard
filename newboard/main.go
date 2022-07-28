@@ -33,13 +33,15 @@ import (
 // pickBool touch control fix
 // deckInit() functin add
 // 2p mouseposition fix
+// version 1.4.2
+// dealer skill implement
 
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
 	ScreenHeight int = 960  //600 960 720 //
-	cardTotal    int = 55
+	cardTotal    int = 56
 
-	version string = "version 1.4.1"
+	version string = "version 1.4.2"
 )
 
 type Game struct {
@@ -73,6 +75,10 @@ var (
 	pickplayer int  = 0
 	pickChan        = make(chan string)
 	//pickNChan       = make(chan string)
+
+	dealBool, dealerS        bool = false, false
+	dOffer, dReciever, dealP int  = 0, 0, 0
+	dOfferD, dRecieverD      int  = 0, 0
 )
 
 func init() {
@@ -103,14 +109,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	screen.DrawImage(backImage, backop)
 	drawPlayerStat(screen)
 
-	if !cardS.sel && !menu && !pickBools {
-		drawCard(screen)
-	} else if cardS.sel && !menu && !pickBools {
-		playerNow.drawCardSelect(screen)
-	} else if menu {
+	// if !cardS.sel && !menu && !pickBools {
+	// 	drawCard(screen)
+	// } else if cardS.sel && !menu && !pickBools {
+	// 	playerNow.drawCardSelect(screen)
+	// } else
+	if menu {
 		gameMenu(screen)
+	} else if cardS.sel {
+		playerNow.drawCardSelect(screen)
 	} else if pickBools {
 		pickingCard(screen, ji)
+	} else if dealBool {
+		drawDealer(screen)
+	} else {
+		drawCard(screen)
 	}
 
 	if touchedHome {
@@ -130,7 +143,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 
 	msg += fmt.Sprintf("\n %v", msgbuff)
-	//msg += fmt.Sprintf("\n %v", copybook)
+	msg += fmt.Sprintf("\n %v", dealBool)
 	for _, t := range g.touches {
 		x, y := ebiten.TouchPosition(t)
 		msg += fmt.Sprintf("\n(%d, %d) touch %d", x, y, t)

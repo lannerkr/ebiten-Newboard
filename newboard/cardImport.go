@@ -117,6 +117,7 @@ func cardimport() {
 
 	allCard[53] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 3, 3, "copy"}
 	allCard[54] = Cardstr{"앵무새", 3, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 2, 2, "copy"}
+	allCard[55] = Cardstr{"거래소", 3, dealershop, "____", dealer, "거래상: 이 카드가 놓여\n질때, 플레이어간 카\n드를 교환할수 있음", 4, 1, "dealer"}
 
 	bigbugCard = Cardstr{"거대벌레", 2, bigbug, "____", nilcard, "   ", 4, 6, " "}
 
@@ -158,9 +159,6 @@ type pickCardStr struct {
 var pickCard [3][5]pickCardStr
 
 func newShuffle() {
-	// if twoplay {
-	// 	fmt.Println(twoplay)
-	// }
 	var a [cardTotal - 1]int
 	for i := 0; i < int(cardTotal)-1; i++ {
 		a[i] = i
@@ -183,16 +181,9 @@ func newShuffle() {
 	}
 
 	// test card
-	// ppn, pdn, pcn1, pcn2 := 0, 1, 22, 53
+	// ppn, pdn, pcn1, pcn2 := 0, 1, 22, 55
 	// pickCard[ppn][pdn].first = deckCardstr{allCard[pcn1], theCardimg(allCard[pcn1]), ppn, 20, pdn, false, false, nil}
 	// pickCard[ppn][pdn].second = deckCardstr{allCard[pcn2], theCardimg(allCard[pcn2]), ppn, 20, pdn, false, false, nil}
-
-	// for p := 0; p < 3; p++ {
-	// 	for d := 0; d < 5; d++ {
-	// 		fmt.Println(pickCard[p][d].first, " // ", pickCard[p][d].second)
-	// 		fmt.Println("------")
-	// 	}
-	// }
 
 }
 
@@ -208,3 +199,23 @@ func deckInit() {
 	}
 
 }
+
+// func imgResize(plimg, plused [3]*ebiten.Image) {
+
+// 	//imgs := images["picking_p0"]
+// 	bow, boh = plimg[0].Size()
+
+// 	img := ebiten.NewImage(cardw, cardh)
+// 	img2 := ebiten.NewImage(cardw, cardh)
+// 	imgop := &ebiten.DrawImageOptions{}
+// 	imgop.GeoM.Scale(float64(cardw)/float64(bow), float64(cardh)/float64(boh))
+
+// 	for i := 0; i < 3; i++ {
+
+// 		img.DrawImage(plimg[i], imgop)
+// 		plimg[i] = img
+// 		img2.DrawImage(plused[i], imgop)
+// 		plused[i] = img2
+// 	}
+
+// }

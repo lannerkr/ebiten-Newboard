@@ -95,7 +95,7 @@ var (
 
 	buttonPos [2]controlStr = [2]controlStr{
 		{5*int(sepw) + 4*cardw, ScreenHeight - 2*int(seph), 5*int(sepw) + 4*cardw + 80, ScreenHeight - 2*int(seph) + 64},
-		{5*int(sepw) + 4*cardw + 120, ScreenHeight - 2*int(seph), 5*int(sepw) + 4*cardw + 200, ScreenHeight - 2*int(seph) + 64},
+		{6*int(sepw) + 4*cardw + 80, ScreenHeight - 2*int(seph), 6*int(sepw) + 4*cardw + 160, ScreenHeight - 2*int(seph) + 64},
 	}
 
 	allCard     [cardTotal]Cardstr
@@ -115,6 +115,8 @@ var (
 
 	turnChan   = make(chan string)
 	attackChan = make(chan string)
+
+	// plimg, plused [3]*ebiten.Image
 )
 
 func playerinit() {
