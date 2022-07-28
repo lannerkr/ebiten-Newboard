@@ -157,7 +157,7 @@ func (pca *deckCardstr) addPlayerBuff(pct *deckCardstr, buff string) {
 	}
 	pBuff := buffStr{pla, pla.turn, pca, plt, plt.turn, pct, buff}
 	playerBuff = append(playerBuff, pBuff)
-	fmt.Println("addPlayerBuff", pca.pNum, pca.card.skill)
+	//fmt.Println("addPlayerBuff", pca.pNum, pca.card.skill)
 }
 
 // excuted when offCard() or buffDoActive() or buffDoPassive()

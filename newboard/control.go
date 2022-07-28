@@ -26,10 +26,12 @@ func (g *Game) touchControl() {
 			} else if mpos.mc == 6 && !menu {
 				mcc6()
 			}
-		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel /*&& !cruelbool && !dealerFb*/ {
+		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools /*&& !cruelbool && !dealerFb*/ {
 			attackControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && !deckCard[playerNow.pn][dn].cardOn {
+		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && !deckCard[playerNow.pn][dn].cardOn && !pickBools {
 			selectControl(mpos.mp, mpos.mc)
+		} else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
+			pickControl(mpos.mp, mpos.mc)
 		}
 
 	}
@@ -248,7 +250,7 @@ func selectControl(mp, mc int) {
 	cardNum := 4*mp + mc
 	pc := &playingCard[playerNow.pn][cardNum]
 	dc := &deckCard[playerNow.pn][cardNum]
-	fmt.Println(cardNum, pc.pNum, pc.deckNum, dc.pNum, dc.deckNum)
+	//fmt.Println(cardNum, pc.pNum, pc.deckNum, dc.pNum, dc.deckNum)
 
 	for _, debuffs := range dc.debuf {
 		if debuffs == "incision" {

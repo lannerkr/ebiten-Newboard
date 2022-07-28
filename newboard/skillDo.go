@@ -190,19 +190,19 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr, ska string) {
 			}
 		}()
 	case "copy":
-		fmt.Println("000]")
+		//fmt.Println("000]")
 		if ppc := cardBoard[preP(pca.pNum)][pca.bNum].card; ppc != nil {
 
 			pska := ppc.card.skill
 			//pct.card.skill = pskt
-			fmt.Println("001]", pca.card.skill)
+			//fmt.Println("001]", pca.card.skill)
 			pca.skillDoA(pct, pska)
 
 		}
 		if npc := cardBoard[nexP(pca.pNum)][pca.bNum].card; npc != nil {
 			nska := npc.card.skill
 			//pct.card.skill = nskt
-			fmt.Println("002]", pca.card.skill)
+			//fmt.Println("002]", pca.card.skill)
 			pca.skillDoA(pct, nska)
 
 		}
@@ -270,19 +270,19 @@ func (pca *deckCardstr) skillDoT(pct *deckCardstr, skt string) {
 			}
 		}
 	case "copy":
-		fmt.Println("000]")
+		//fmt.Println("000]")
 		if ppc := cardBoard[preP(pct.pNum)][pct.bNum].card; ppc != nil {
 
 			pskt := ppc.card.skill
 			//pct.card.skill = pskt
-			fmt.Println("001]", pct.card.skill)
+			//fmt.Println("001]", pct.card.skill)
 			pca.skillDoT(pct, pskt)
 
 		}
 		if npc := cardBoard[nexP(pct.pNum)][pct.bNum].card; npc != nil {
 			nskt := npc.card.skill
 			//pct.card.skill = nskt
-			fmt.Println("002]", pct.card.skill)
+			//fmt.Println("002]", pct.card.skill)
 			pca.skillDoT(pct, nskt)
 
 		}

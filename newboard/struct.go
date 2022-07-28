@@ -1,8 +1,6 @@
 package newboard
 
 import (
-	"fmt"
-
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -97,7 +95,7 @@ var (
 
 	buttonPos [2]controlStr = [2]controlStr{
 		{5*int(sepw) + 4*cardw, ScreenHeight - 2*int(seph), 5*int(sepw) + 4*cardw + 80, ScreenHeight - 2*int(seph) + 64},
-		{5*int(sepw) + 4*cardw + 80, ScreenHeight - 2*int(seph), 5*int(sepw) + 4*cardw + 160, ScreenHeight - 2*int(seph) + 64},
+		{5*int(sepw) + 4*cardw + 120, ScreenHeight - 2*int(seph), 5*int(sepw) + 4*cardw + 200, ScreenHeight - 2*int(seph) + 64},
 	}
 
 	allCard     [cardTotal]Cardstr
@@ -142,8 +140,8 @@ func playerinit() {
 			playingCard[i][j].cardOn = false
 		}
 	}
-	fmt.Println(player[0].pn, player[1].pn, player[2].pn)
-	fmt.Println(playerNow.pn)
+	//fmt.Println(player[0].pn, player[1].pn, player[2].pn)
+	//fmt.Println(playerNow.pn)
 }
 
 func init() {

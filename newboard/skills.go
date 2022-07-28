@@ -41,7 +41,6 @@ func (pca *deckCardstr) OnboardSkillCopy() {
 
 	for i, cpb := range copybook {
 		if cpb.pc == pca {
-
 			if cpb.tc[0].tpc != ppc.card {
 				if cpb.tc[0].buff != "" {
 					pca.remBuff(cpb.tc[0].buff)
@@ -66,6 +65,7 @@ func (pca *deckCardstr) OnboardSkillCopy() {
 			if cpb.tc[1].tpc != npc.card {
 				if cpb.tc[1].buff != "" {
 					pca.remBuff(cpb.tc[1].buff)
+					pca.removePlayerBuff(pca, cpb.tc[1].buff)
 				}
 				if npc.card == nil {
 					copybook[i].tc[1] = tcStr{nil, ""}

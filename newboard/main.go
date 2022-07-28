@@ -28,13 +28,18 @@ import (
 // cruelbools control modified (attackControl())
 // version 1.4
 // cardPick add
+// version 1.4.1
+// copy playerBuff bug fix
+// pickBool touch control fix
+// deckInit() functin add
+// 2p mouseposition fix
 
 const (
-	ScreenWidth  int = 800 //800 1280 1440 //
-	ScreenHeight int = 600 //600 960 720 //
+	ScreenWidth  int = 1280 //800 1280 1440 //
+	ScreenHeight int = 960  //600 960 720 //
 	cardTotal    int = 55
 
-	version string = "version 1.4"
+	version string = "version 1.4.1"
 )
 
 type Game struct {
@@ -75,6 +80,7 @@ func init() {
 	fontimport()
 	fillBack(backImage)
 	cardimport()
+	deckInit()
 	newShuffle()
 	//shuffleCard()
 	playerinit()
@@ -124,7 +130,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 
 	msg += fmt.Sprintf("\n %v", msgbuff)
-	msg += fmt.Sprintf("\n %v", copybook)
+	//msg += fmt.Sprintf("\n %v", copybook)
 	for _, t := range g.touches {
 		x, y := ebiten.TouchPosition(t)
 		msg += fmt.Sprintf("\n(%d, %d) touch %d", x, y, t)

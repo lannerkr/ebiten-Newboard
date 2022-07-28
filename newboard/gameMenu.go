@@ -91,7 +91,7 @@ func menuselecting(mx int) {
 }
 
 func newGame() {
-
+	deckInit()
 	newShuffle()
 	//shuffleCard()
 	playerinit()

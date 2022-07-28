@@ -1,7 +1,6 @@
 package newboard
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -121,6 +120,7 @@ func cardimport() {
 
 	bigbugCard = Cardstr{"거대벌레", 2, bigbug, "____", nilcard, "   ", 4, 6, " "}
 
+	NallCard[0] = Cardstr{" ", 0, nilcard, "____", nilcard, " ", 0, 0, " "}
 	NallCard[1] = Cardstr{"거래소", 3, dealershop, "____", dealer, "거래상: 이 카드가 놓여\n질때, 플레이어간 카\n드를 교환할수 있음", 4, 1, "dealer"}
 	NallCard[2] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 3, 3, "copy"}
 	NallCard[3] = Cardstr{"앵무새", 3, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 2, 2, "copy"}
@@ -158,9 +158,9 @@ type pickCardStr struct {
 var pickCard [3][5]pickCardStr
 
 func newShuffle() {
-	if twoplay {
-		fmt.Println(twoplay)
-	}
+	// if twoplay {
+	// 	fmt.Println(twoplay)
+	// }
 	var a [cardTotal - 1]int
 	for i := 0; i < int(cardTotal)-1; i++ {
 		a[i] = i
@@ -183,9 +183,9 @@ func newShuffle() {
 	}
 
 	// test card
-	ppn, pdn, pcn1, pcn2 := 0, 1, 53, 22
-	pickCard[ppn][pdn].first = deckCardstr{allCard[pcn1], theCardimg(allCard[pcn1]), ppn, 20, pdn, false, false, nil}
-	pickCard[ppn][pdn].second = deckCardstr{allCard[pcn2], theCardimg(allCard[pcn2]), ppn, 20, pdn, false, false, nil}
+	// ppn, pdn, pcn1, pcn2 := 0, 1, 22, 53
+	// pickCard[ppn][pdn].first = deckCardstr{allCard[pcn1], theCardimg(allCard[pcn1]), ppn, 20, pdn, false, false, nil}
+	// pickCard[ppn][pdn].second = deckCardstr{allCard[pcn2], theCardimg(allCard[pcn2]), ppn, 20, pdn, false, false, nil}
 
 	// for p := 0; p < 3; p++ {
 	// 	for d := 0; d < 5; d++ {
@@ -193,5 +193,18 @@ func newShuffle() {
 	// 		fmt.Println("------")
 	// 	}
 	// }
+
+}
+
+func deckInit() {
+
+	for c := 0; c < 30; {
+		for p := 0; p < 3; p++ {
+			for d := 0; d < 10; d++ {
+				deckCard[p][d] = deckCardstr{NallCard[0], theCardimg(NallCard[0]), p, 20, d, false, false, nil}
+				c++
+			}
+		}
+	}
 
 }
