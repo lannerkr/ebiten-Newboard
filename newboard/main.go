@@ -35,6 +35,8 @@ import (
 // 2p mouseposition fix
 // version 1.4.2
 // dealer skill implement
+// version 1.4.3
+// control function optimize
 
 const (
 	ScreenWidth  int = 800 //800 1280 1440 //

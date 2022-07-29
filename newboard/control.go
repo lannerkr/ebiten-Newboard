@@ -20,22 +20,25 @@ func (g *Game) touchControl() {
 		if menu {
 			mpos.mp = mousePositionNG(x, y)
 			go menuselecting(mpos.mp)
-		} else if mpos.mp == 5 {
-			if mpos.mc == 5 {
-				mcc5()
-			} else if mpos.mc == 6 && !menu {
-				mcc6()
-			}
-		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools && !dealBool /*&& !cruelbool && !dealerFb*/ {
-			attackControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
-			selectControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
-			pickControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && dealBool {
-			dealControl(mpos.mp, mpos.mc)
+		} else {
+			controler(mpos.mp, mpos.mc, dn)
 		}
 
+		// else if mpos.mp == 5 {
+		// 	if mpos.mc == 5 {
+		// 		mcc5()
+		// 	} else if mpos.mc == 6 && !menu {
+		// 		mcc6()
+		// 	}
+		// } else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools && !dealBool {
+		// 	attackControl(mpos.mp, mpos.mc)
+		// } else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
+		// 	selectControl(mpos.mp, mpos.mc)
+		// } else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
+		// 	pickControl(mpos.mp, mpos.mc)
+		// } else if mpos.mp != 8 && mpos.mc != 8 && dealBool {
+		// 	dealControl(mpos.mp, mpos.mc)
+		// }
 	}
 }
 
@@ -53,24 +56,47 @@ func control() {
 		if menu {
 			mpos.mp = mousePositionNG(ebiten.CursorPosition())
 			go menuselecting(mpos.mp)
-		} else if mpos.mp == 5 {
-			if mpos.mc == 5 {
-				mcc5()
-			} else if mpos.mc == 6 {
-				mcc6()
-			}
-		} else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools && !dealBool /*&& !cruelbool && !dealerFb*/ {
-			attackControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
-			selectControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
-			pickControl(mpos.mp, mpos.mc)
-		} else if mpos.mp != 8 && mpos.mc != 8 && dealBool {
-			dealControl(mpos.mp, mpos.mc)
+		} else {
+			controler(mpos.mp, mpos.mc, dn)
 		}
 
+		// if menu {
+		// 	mpos.mp = mousePositionNG(ebiten.CursorPosition())
+		// 	go menuselecting(mpos.mp)
+		// } else if mpos.mp == 5 {
+		// 	if mpos.mc == 5 {
+		// 		mcc5()
+		// 	} else if mpos.mc == 6 {
+		// 		mcc6()
+		// 	}
+		// } else if mpos.mp != 8 && mpos.mc != 8 && !cardS.sel && !pickBools && !dealBool {
+		// 	attackControl(mpos.mp, mpos.mc)
+		// } else if mpos.mp != 8 && mpos.mc != 8 && cardS.sel && 4*mpos.mp+mpos.mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
+		// 	selectControl(mpos.mp, mpos.mc)
+		// } else if mpos.mp != 8 && mpos.mc != 8 && pickBools {
+		// 	pickControl(mpos.mp, mpos.mc)
+		// } else if mpos.mp != 8 && mpos.mc != 8 && dealBool {
+		// 	dealControl(mpos.mp, mpos.mc)
+		// }
 	}
+}
 
+func controler(mp, mc, dn int) {
+	if mp == 5 {
+		if mc == 5 {
+			mcc5()
+		} else if mc == 6 {
+			mcc6()
+		}
+	} else if mp != 8 && mc != 8 && !cardS.sel && !pickBools && !dealBool {
+		attackControl(mp, mc)
+	} else if mp != 8 && mc != 8 && cardS.sel && 4*mp+mc <= 9 && !deckCard[playerNow.pn][dn].cardOn && !pickBools && !dealBool {
+		selectControl(mp, mc)
+	} else if mp != 8 && mc != 8 && pickBools {
+		pickControl(mp, mc)
+	} else if mp != 8 && mc != 8 && dealBool {
+		dealControl(mp, mc)
+	}
 }
 
 func mcc5() {
@@ -327,26 +353,20 @@ func pickControl(mp, mc int) {
 }
 
 func dealControl(mp, mc int) {
-	//var offer, reciever int
 	if !dealerS {
 		if mc == 0 || mc == 2 {
 			dOffer = mp
-			//cardS.sel = true
 			dealP = dOffer
 			bmsg = "거래할 카드를 선택하세요"
 			dealerS = true
-			//fmt.Println(dealP)
 
 		} else if mc == 1 || mc == 3 {
 			dReciever = mp
-			//cardS.sel = true
 			dealP = dReciever
 			bmsg = "거래할 카드를 선택하세요"
 			dealerS = true
-			//fmt.Println(dealP)
 		}
 	} else {
-		fmt.Println(dealP, dOffer, dReciever)
 		if dealP == dOffer {
 			deckNum := 4*mp + mc
 			dOfferD = deckNum
