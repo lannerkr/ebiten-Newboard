@@ -1,6 +1,7 @@
 package newboard
 
 import (
+	"bytes"
 	"fmt"
 	"image/color"
 	"math"
@@ -105,7 +106,8 @@ func (pc *deckCardstr) playingStat(screen *ebiten.Image) {
 	text.Draw(screen, vHP, arcadeFont, sx/53*10+int(px), int(math.Round(float64(sy)*9.4/10))+int(py), color.Black)
 	vDP := strconv.Itoa(pc.card.dp)
 	text.Draw(screen, vDP, arcadeFont, sx/53*36+int(px), int(math.Round(float64(sy)*9.4/10))+int(py), color.Black)
-	dbuf := fmt.Sprintf("%v", pc.debuf)
+	//dbuf := fmt.Sprintf("%v", pc.debuf)
+	dbuf := strL(pc.debuf)
 	text.Draw(screen, dbuf, arcadeFontS, sx/17*11+int(px), sy/40*13+int(py), color.RGBA{0xff, 0, 0, 0xff})
 
 	if pc.used {
@@ -139,5 +141,19 @@ func drawPlayerStat(screen *ebiten.Image) {
 	}
 
 	text.Draw(screen, amsg, arcadeFontB, int(sepw), p3y+cardh+10, color.Black)
+
+}
+
+func strL(dbuff []string) string {
+
+	var b bytes.Buffer
+	var buffL string = ""
+
+	for _, buffs := range dbuff {
+		a := strLocal[buffs]
+		b.WriteString(a)
+	}
+	buffL = b.String()
+	return buffL
 
 }

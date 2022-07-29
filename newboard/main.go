@@ -37,13 +37,15 @@ import (
 // dealer skill implement
 // version 1.4.3
 // control function optimize
+// vresion 1.4.4
+// debuf string localization
 
 const (
-	ScreenWidth  int = 800 //800 1280 1440 //
-	ScreenHeight int = 600 //600 960 720 //
+	ScreenWidth  int = 1280 //800 1280 1440 //
+	ScreenHeight int = 960  //600 960 720 //
 	cardTotal    int = 56
 
-	version string = "version 1.4.2"
+	version string = "version 1.4.4"
 )
 
 type Game struct {
@@ -145,7 +147,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 
 	msg += fmt.Sprintf("\n %v", msgbuff)
-	msg += fmt.Sprintf("\n %v", dealBool)
+	//msg += fmt.Sprintf("\n %v", strL(playingCard[0][1].debuf))
 	for _, t := range g.touches {
 		x, y := ebiten.TouchPosition(t)
 		msg += fmt.Sprintf("\n(%d, %d) touch %d", x, y, t)

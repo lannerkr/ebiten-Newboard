@@ -116,6 +116,8 @@ var (
 	turnChan   = make(chan string)
 	attackChan = make(chan string)
 
+	strLocal map[string]string
+
 	// plimg, plused [3]*ebiten.Image
 )
 

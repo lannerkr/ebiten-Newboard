@@ -170,6 +170,8 @@ func mcc6() {
 		//fmt.Println(playerNow, playerNow.pn, playerNow.pMoney)
 
 		playerNow.buffDoPassive()
+
+		//strL(cardBoard[0][0].card.debuf)
 	}
 }
 

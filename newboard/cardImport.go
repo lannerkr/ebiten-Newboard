@@ -126,6 +126,7 @@ func cardimport() {
 	NallCard[2] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 3, 3, "copy"}
 	NallCard[3] = Cardstr{"앵무새", 3, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 2, 2, "copy"}
 
+	strInit()
 }
 
 func shuffleCard() {
@@ -219,3 +220,52 @@ func deckInit() {
 // 	}
 
 // }
+
+func strInit() {
+	strLocal = map[string]string{
+		"advance":      "신속",
+		"airproof":     "공기방탄",
+		"charge":       "준비",
+		"climb":        "나무타기",
+		"company":      "동료",
+		"copy":         "흉내",
+		"cruelty":      "잔혹함",
+		"cute":         "귀여움",
+		"dealer":       "거래상",
+		"diving":       "다이빙",
+		"dolphin":      "물",
+		"eggC":         "부화",
+		"fire":         "불",
+		"flying":       "비행",
+		"grow":         "성장",
+		"helios":       "태양신",
+		"horn":         "뿔",
+		"huge":         "거대",
+		"incision":     "자르기",
+		"jump":         "점프",
+		"lneck":        "긴목",
+		"mistaken":     "착각",
+		"mistery":      "미스테리",
+		"poison":       "독",
+		"power":        "힘",
+		"revenge":      "보복",
+		"run":          "달리기",
+		"runover":      "메치기",
+		"rush":         "돌진",
+		"sCoin":        "S코인",
+		"selfdestruct": "자폭",
+		"shell":        "껍데기",
+		"spacesupply":  "우주보급",
+		"strategy":     "전략",
+		"submersion":   "물에숨어지내다",
+		"survive":      "버티기",
+		"tentacle":     "긴촉수",
+		"threat":       "위협",
+		"totem":        "리더쉽",
+		"trans":        "변형",
+		"vampire":      "흡혈",
+		"water":        "물",
+		"wield":        "휘두르기",
+		"wit":          "꾀",
+	}
+}
