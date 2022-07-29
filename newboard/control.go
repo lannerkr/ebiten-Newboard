@@ -343,12 +343,12 @@ func pickControl(mp, mc int) {
 		jipick = 0
 	} else if mc == 2 {
 		go pickedC(mc)
-		pickChan <- "" // wait until pickedC() ends and closes pickChan channel
+		pickChan <- "" // open pickChan channel, and then wait until pickedC() closes pickChan channel
 		pickNumber(ji)
 
 	} else if mc == 3 {
 		go pickedC(mc)
-		pickChan <- ""
+		pickChan <- "" // open pickChan channel, and then wait until pickedC() closes pickChan channel
 		pickNumber(ji)
 	}
 

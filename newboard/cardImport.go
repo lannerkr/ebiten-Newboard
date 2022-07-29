@@ -111,7 +111,7 @@ func cardimport() {
 	allCard[47] = Cardstr{"네시", 4, nessie, "____", submersion, "물에숨어지내다: 1턴\n은 공격을 받지만, 다\n음턴은 공격을 받지 않는다", 4, 2, "submersion"}
 	allCard[48] = Cardstr{"  ", 4, dark, "____", mistery, "미스테리: 50%의 확률\n로 공격이 맞지 않는다", 3, 2, "mistery"}
 	allCard[49] = Cardstr{"격투머신", 4, fmachine, "____", runover, "메치기: 상대를 공\n격하면 다른 상대의\n칸으로 옮긴다", 4, 2, "runover"}
-	allCard[50] = Cardstr{"구더기", 2, bug, "____", grow, "성장: 3턴이 지나면 카드를 뒤집는다", 1, 1, "grow"}
+	allCard[50] = Cardstr{"구더기", 2, bug, "____", grow, "성장: 3턴이 지나면 카\n드를 뒤집는다", 1, 1, "grow"}
 	allCard[51] = Cardstr{"달팽이", 3, nilcard, "____", shell, "껍데기: 한번에 죽지\n않으면, 해당 공격을 무\n효화 한다.(1번만 발동)", 4, 1, "shell"}
 	allCard[52] = Cardstr{"코끼리", 4, elephant, "____", nilcard, "힘: 공격력이나 체력\n이 1인 상대의 공격은\n통하지 않는다", 4, 3, "power"}
 
@@ -123,8 +123,8 @@ func cardimport() {
 
 	NallCard[0] = Cardstr{" ", 0, nilcard, "____", nilcard, " ", 0, 0, " "}
 	NallCard[1] = Cardstr{"거래소", 3, dealershop, "____", dealer, "거래상: 이 카드가 놓여\n질때, 플레이어간 카\n드를 교환할수 있음", 4, 1, "dealer"}
-	NallCard[2] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 3, 3, "copy"}
-	NallCard[3] = Cardstr{"앵무새", 3, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특정\n을 가진다", 2, 2, "copy"}
+	NallCard[2] = Cardstr{"CV 맨", 4, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특성\n을 가진다", 3, 3, "copy"}
+	NallCard[3] = Cardstr{"앵무새", 3, nilcard, "____", nilcard, "흉내: 해당 라인에 있\n는 모든 카드의 특성\n을 가진다", 2, 2, "copy"}
 
 	strInit()
 }

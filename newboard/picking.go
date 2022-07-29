@@ -109,5 +109,6 @@ func pickedC(mc int) {
 		}
 	}
 
+	// after reasigning picked card to deck, and then close pickChan channel which's opened by pickControl()
 	<-pickChan
 }
