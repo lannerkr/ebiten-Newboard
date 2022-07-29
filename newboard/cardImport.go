@@ -159,8 +159,8 @@ type pickCardStr struct {
 var pickCard [3][5]pickCardStr
 
 func newShuffle() {
-	var a [cardTotal - 1]int
-	for i := 0; i < int(cardTotal)-1; i++ {
+	var a [cardTotal]int
+	for i := 0; i < int(cardTotal); i++ {
 		a[i] = i
 	}
 	rand.Seed(time.Now().UnixNano())

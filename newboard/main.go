@@ -37,8 +37,8 @@ import (
 // dealer skill implement
 
 const (
-	ScreenWidth  int = 1280 //800 1280 1440 //
-	ScreenHeight int = 960  //600 960 720 //
+	ScreenWidth  int = 800 //800 1280 1440 //
+	ScreenHeight int = 600 //600 960 720 //
 	cardTotal    int = 56
 
 	version string = "version 1.4.2"

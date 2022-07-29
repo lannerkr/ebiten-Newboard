@@ -1,8 +1,6 @@
 package newboard
 
 import (
-	"fmt"
-
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -179,7 +177,7 @@ func drawDealer(screen *ebiten.Image) {
 }
 
 func dealerCardChange() {
-	fmt.Println(deckCard[dOffer][dOfferD], deckCard[dReciever][dRecieverD])
+	//fmt.Println(deckCard[dOffer][dOfferD], deckCard[dReciever][dRecieverD])
 
 	offerCard := deckCard[dOffer][dOfferD]
 	recieverCard := deckCard[dReciever][dRecieverD]
@@ -189,5 +187,5 @@ func dealerCardChange() {
 	deckCard[dReciever][dRecieverD] = offerCard
 	deckCard[dReciever][dRecieverD].pNum, deckCard[dReciever][dRecieverD].deckNum = recieverCard.pNum, recieverCard.deckNum
 
-	fmt.Println(deckCard[dOffer][dOfferD], deckCard[dReciever][dRecieverD])
+	//fmt.Println(deckCard[dOffer][dOfferD], deckCard[dReciever][dRecieverD])
 }
