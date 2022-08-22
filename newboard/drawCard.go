@@ -38,11 +38,15 @@ func (p *Players) drawCardSelect(screen *ebiten.Image) {
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 4; j++ {
 			if !deckCard[p.pn][d].cardOn {
+				if elimode && deckCard[p.pn][d].bNum == 99 {
+					goto ELI
+				}
 				screen.DrawImage(deckCard[p.pn][d].cardImg, cardop[i][j])
 				if dbuf := fmt.Sprintf("%v", deckCard[p.pn][d].debuf); dbuf != "[]" {
 					px, py := bC[d].bx, bC[d].by
 					text.Draw(screen, dbuf, arcadeFontS, cardw/17*11+int(px), cardh/40*13+int(py), color.RGBA{0xff, 0, 0, 0xff})
 				}
+			ELI:
 			}
 			d++
 			if d >= 10 {
@@ -53,8 +57,13 @@ func (p *Players) drawCardSelect(screen *ebiten.Image) {
 }
 
 func theCardimg(dc Cardstr) *ebiten.Image {
+	var cardimg *ebiten.Image
+	if chimgBool {
+		cardimg = cardNimg[cardN] //.SubImage(image.Rect(0, 0, 160, 180))
+	} else {
+		cardimg = images["playingcard"] //.SubImage(image.Rect(0, 0, 160, 180))
+	}
 
-	cardimg := images["playingcard"] //.SubImage(image.Rect(0, 0, 160, 180))
 	img := ebiten.NewImage(cardw, cardh)
 	imgop := &ebiten.DrawImageOptions{}
 	imgop.GeoM.Scale(float64(cardw)/160, float64(cardh)/180)

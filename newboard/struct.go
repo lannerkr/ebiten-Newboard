@@ -144,6 +144,11 @@ func playerinit() {
 			playingCard[i][j].cardOn = false
 		}
 	}
+	if twoplay {
+		for j := 0; j < 4; j++ {
+			playingCard[2][j].putCard(&deckCard[2][j], j)
+		}
+	}
 	//fmt.Println(player[0].pn, player[1].pn, player[2].pn)
 	//fmt.Println(playerNow.pn)
 }
@@ -185,6 +190,10 @@ func (pc *deckCardstr) offCard() {
 	dn := pc.deckNum
 	deckCard[pn][dn].cardOn = false
 	deckCard[pn][dn].bNum = 20
+
+	if elimode {
+		deckCard[pn][dn].bNum = 99
+	}
 
 	pc.removePlayerBuff(pc, "")
 }

@@ -39,13 +39,17 @@ import (
 // control function optimize
 // vresion 1.4.4
 // debuf string localization
+// version 1.5
+// elimination mode
+// helios bug fix
+// change card and background image
 
 const (
 	ScreenWidth  int = 1280 //800 1280 1440 //
 	ScreenHeight int = 960  //600 960 720 //
 	cardTotal    int = 56
 
-	version string = "version 1.4.4"
+	version string = "version 1.5"
 )
 
 type Game struct {
@@ -83,6 +87,9 @@ var (
 	dealBool, dealerS        bool = false, false
 	dOffer, dReciever, dealP int  = 0, 0, 0
 	dOfferD, dRecieverD      int  = 0, 0
+
+	elimode   bool = false
+	chimgBool bool = false
 )
 
 func init() {
@@ -120,6 +127,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	// } else
 	if menu {
 		gameMenu(screen)
+	} else if chimgBool {
+		chimgMenu(screen)
 	} else if cardS.sel {
 		playerNow.drawCardSelect(screen)
 	} else if pickBools {
@@ -147,7 +156,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 
 	msg += fmt.Sprintf("\n %v", msgbuff)
-	//msg += fmt.Sprintf("\n %v", strL(playingCard[0][1].debuf))
+	msg += fmt.Sprintf("\n %v", playerNow.deckRemainCard())
 	for _, t := range g.touches {
 		x, y := ebiten.TouchPosition(t)
 		msg += fmt.Sprintf("\n(%d, %d) touch %d", x, y, t)

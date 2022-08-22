@@ -7,6 +7,12 @@ import (
 
 func cardimport() {
 
+	cardNimg[0] = images["card_1"]
+	cardNimg[1] = images["card_2"]
+	cardNimg[2] = images["card_3"]
+	cardNimg[3] = images["card_4"]
+	cardNimg[4] = images["card_5"]
+
 	nilcard := images["nil"]
 
 	blowfish := images["복어"]

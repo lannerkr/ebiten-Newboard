@@ -50,6 +50,10 @@ func mousePositionNG(mx, my int) (mpp int) {
 		}
 	} else if my > (height/2+20) && my < (height/2+120) && mx > (width/2-320) && mx < (width/2) {
 		mpp = 3
+	} else if my > (height/2+20) && my < (height/2+120) && mx > (width/2) && mx < (width/2+320) {
+		mpp = 4
+	} else if my > (height/2+20) && my < (height/2+120) && mx > (width/2+320) && mx < (width/2+640) {
+		mpp = 6
 	}
 
 	return mpp

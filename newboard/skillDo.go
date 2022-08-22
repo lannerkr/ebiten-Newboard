@@ -161,6 +161,10 @@ func (pca *deckCardstr) skillDoA(pct *deckCardstr, ska string) {
 			pca.attackCard(npct)
 		}
 	case "wield":
+		if elimode {
+			pct.offCard()
+			return
+		}
 		if cardBoard[pct.pNum][nexB(pct.bNum)].card == nil {
 			cardBoard[pct.pNum][pct.bNum].card = nil
 			cardBoard[pct.pNum][nexB(pct.bNum)].card = pct
@@ -562,7 +566,9 @@ func (p *Players) buffDoPassive() {
 					apc.remBuff(buff)
 				}
 			case "helios":
-				apc.card.dp += 2
+				if playerNow == apl {
+					apc.card.dp += 2
+				}
 			case "spacesupply":
 				if playerNow == apl {
 					nbn := nexB(apc.bNum)

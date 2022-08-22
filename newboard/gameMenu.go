@@ -16,14 +16,13 @@ func gameMenu(screenN *ebiten.Image) {
 	height := ScreenHeight
 
 	restart := images["n_start"]
-
 	gameover := images["n_exit"]
-
 	win := images["win"]
-
 	player2 := images["n_2playerN"]
-
 	menu := images["n_menu"]
+	elimi := images["eliminate"]
+	change := images["change"]
+
 	baw, bah = menu.Size()
 	opback := &ebiten.DrawImageOptions{}
 	opback.GeoM.Translate(0, 0)
@@ -38,6 +37,12 @@ func gameMenu(screenN *ebiten.Image) {
 	op2p := &ebiten.DrawImageOptions{}
 	op2p.GeoM.Translate(float64(width/2-260), float64(height/2+20))
 
+	opeli := &ebiten.DrawImageOptions{}
+	opeli.GeoM.Translate(float64(width/2), float64(height/2+20))
+
+	opch := &ebiten.DrawImageOptions{}
+	opch.GeoM.Translate(float64(width/2+260), float64(height/2+20))
+
 	// selWindow := ebiten.NewImage(width, height)
 	// selWindow.Fill(color.Black)
 	// sop := &ebiten.DrawImageOptions{}
@@ -48,6 +53,8 @@ func gameMenu(screenN *ebiten.Image) {
 	screenN.DrawImage(restart, opre)
 	screenN.DrawImage(gameover, opgo)
 	screenN.DrawImage(player2, op2p)
+	screenN.DrawImage(elimi, opeli)
+	screenN.DrawImage(change, opch)
 
 	if gameWin {
 		screenN.DrawImage(win, opwin)
@@ -71,7 +78,12 @@ func menuselecting(mx int) {
 		//go pickNumber(ji)
 	} else if mx == 2 {
 		os.Exit(0)
-	} else if mx == 3 {
+	} else if mx == 3 || mx == 4 {
+		if mx == 4 {
+			elimode = true
+		} else {
+			elimode = false
+		}
 		twoplay = true
 		newGame()
 		player[2].pHP = 0
@@ -87,6 +99,9 @@ func menuselecting(mx int) {
 			touchedHome = false
 		}()
 		menu = false
+	} else if mx == 6 {
+		menu = false
+		chimgBool = true
 	}
 }
 
@@ -107,21 +122,39 @@ func newGame() {
 
 func gamewin() {
 
-	for i := 0; i < 3; i++ {
-		if player[i].pHP <= 0 && !looseplayer[i] {
-			winPoint = winPoint + 1
-			looseplayer[i] = true
-			for b := 0; b < 4; b++ {
-				if cardBoard[i][b].card != nil {
-					cardBoard[i][b].card.offCard()
+	if elimode {
+		var winp [2]int = [2]int{0, 0}
+		for i := 0; i < 2; i++ {
+			for d := 0; d < 10; d++ {
+				if deckCard[i][d].bNum == 99 {
+					winp[i]++
+				}
+			}
+			if winp[i] == 10 {
+				gameWin = true
+				menu = true
+			}
+		}
+
+	} else {
+
+		for i := 0; i < 3; i++ {
+			if player[i].pHP <= 0 && !looseplayer[i] {
+				winPoint = winPoint + 1
+				looseplayer[i] = true
+				for b := 0; b < 4; b++ {
+					if cardBoard[i][b].card != nil {
+						cardBoard[i][b].card.offCard()
+					}
 				}
 			}
 		}
-	}
 
-	if winPoint >= 2 {
-		gameWin = true
-		menu = true
+		if winPoint >= 2 {
+			gameWin = true
+			menu = true
+
+		}
 
 	}
 

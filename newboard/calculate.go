@@ -37,3 +37,14 @@ func nexB(bn int) int {
 	return nexbn
 
 }
+
+func (pl *Players) deckRemainCard() int {
+	rcard := 0
+	for d := 0; d < 10; d++ {
+		if !deckCard[pl.pn][d].cardOn && deckCard[pl.pn][d].bNum != 99 {
+			rcard++
+		}
+	}
+
+	return rcard
+}

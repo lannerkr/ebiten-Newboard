@@ -117,6 +117,8 @@ func mcc5() {
 		dealerS = false
 	} else if dealBool {
 		dealBool = false
+	} else if chimgBool {
+		chimgBool = false
 	} else {
 		menu = true
 	}
@@ -171,7 +173,33 @@ func mcc6() {
 
 		playerNow.buffDoPassive()
 
-		//strL(cardBoard[0][0].card.debuf)
+		if elimode {
+			playerNow.pHP = 100
+
+			if player[0].deckRemainCard() == 0 && player[1].deckRemainCard() == 0 {
+				var respoint int = 0
+				for b := 0; b < 4; b++ {
+					if cardBoard[0][b].card != nil && cardBoard[1][b].card != nil {
+						respoint++
+					}
+				}
+				fmt.Println("respoint : ", respoint)
+				if respoint == 0 {
+					for d := 0; d < 10; d++ {
+						if playingCard[0][d].cardOn {
+							playingCard[0][d].cardOn = false
+							deckCard[0][d].cardOn = false
+							deckCard[0][d].bNum = 20
+						} else if playingCard[1][d].cardOn {
+							playingCard[1][d].cardOn = false
+							deckCard[1][d].cardOn = false
+							deckCard[1][d].bNum = 20
+						}
+					}
+				}
+			}
+		}
+
 	}
 }
 
@@ -274,6 +302,9 @@ func selectControl(mp, mc int) {
 	dc := &deckCard[playerNow.pn][cardNum]
 	//fmt.Println(cardNum, pc.pNum, pc.deckNum, dc.pNum, dc.deckNum)
 
+	if elimode && dc.bNum == 99 {
+		return
+	}
 	for _, debuffs := range dc.debuf {
 		if debuffs == "incision" {
 			bmsg = "자르기에 죽은 카드입니다.\n추가할 카드를 선택하세요."
